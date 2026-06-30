@@ -1,120 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<body id="app-root">
 
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=Oswald:wght@400;500;700&amp;display=swap"
-    rel="stylesheet">
+  <head>
 
-  <style>
-    :root {
-      --paper-bg: #F3F1EA;
-      --dark-ink: #1A1A1A;
-    }
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=Oswald:wght@400;500;700&amp;display=swap"
+      rel="stylesheet">
 
-    .animate-on-scroll-hidden {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-    }
+    <style>
+      :root {
+        --paper-bg: #F3F1EA;
+        --dark-ink: #1A1A1A;
+      }
 
-    .animate-on-scroll-visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      .animate-on-scroll-hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+      }
 
-    .text-stroke {
-      -webkit-text-stroke: 1px var(--dark-ink);
-      color: transparent;
-    }
+      .animate-on-scroll-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-    .text-stroke-thin {
-      -webkit-text-stroke: 0.5px var(--dark-ink);
-      color: transparent;
-    }
+      .text-stroke {
+        -webkit-text-stroke: 1px var(--dark-ink);
+        color: transparent;
+      }
 
-    .writing-vertical-lr {
-      writing-mode: vertical-lr;
-    }
+      .text-stroke-thin {
+        -webkit-text-stroke: 0.5px var(--dark-ink);
+        color: transparent;
+      }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
+      .writing-vertical-lr {
+        writing-mode: vertical-lr;
+      }
 
-    ::-webkit-scrollbar-track {
-      background: #F3F1EA;
-    }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
 
-    ::-webkit-scrollbar-thumb {
-      background: #1A1A1A;
-    }
-  </style>
-  <link rel="stylesheet" href="/styles.css">
-  <style type="text/tailwindcss">@tailwind base;
+      ::-webkit-scrollbar-track {
+        background: #F3F1EA;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #1A1A1A;
+      }
+    </style>
+    <link rel="stylesheet" href="/styles.css">
+    <style type="text/tailwindcss">@tailwind base;
 @tailwind components;
 @tailwind utilities;</style>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config = {
-      important: '#app-root',
-      theme: {
-        extend: {
-          colors: {
-            'paper-bg': '#F3F1EA',
-            'outer-bg': '#E5E5E5',
-            'dark-ink': '#1A1A1A',
-            'brand-primary': '#FF4400',
-          },
-          fontFamily: {
-            'primary': ['Oswald', 'sans-serif'],
-            'secondary': ['Inter', 'sans-serif'],
-            'mono': ['monospace'],
-          },
-          animation: {
-            'marquee': 'marquee 20s linear infinite',
-            'spin-slow': 'spin 8s linear infinite',
-          },
-          keyframes: {
-            marquee: {
-              '0%': { transform: 'translateX(0)' },
-              '100%': { transform: 'translateX(-50%)' },
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = {
+        important: '#app-root',
+        theme: {
+          extend: {
+            colors: {
+              'paper-bg': '#F3F1EA',
+              'outer-bg': '#E5E5E5',
+              'dark-ink': '#1A1A1A',
+              'brand-primary': '#FF4400',
+            },
+            fontFamily: {
+              'primary': ['Oswald', 'sans-serif'],
+              'secondary': ['Inter', 'sans-serif'],
+              'mono': ['monospace'],
+            },
+            animation: {
+              'marquee': 'marquee 20s linear infinite',
+              'spin-slow': 'spin 8s linear infinite',
+            },
+            keyframes: {
+              marquee: {
+                '0%': { transform: 'translateX(0)' },
+                '100%': { transform: 'translateX(-50%)' },
+              }
+            },
+            spacing: {
+              's': '16px',
+              'm': '24px',
+              'l': '32px',
+              'xl': '48px',
             }
-          },
-          spacing: {
-            's': '16px',
-            'm': '24px',
-            'l': '32px',
-            'xl': '48px',
           }
         }
-      }
-    }</script>
+      }</script>
 
-  <!-- ============ NAV ============ -->
-  <header class="site-nav">
-    <div class="nav-inner">
-      <a href="#top" class="brand"><span class="dot"></span>Yash Kumar</a>
-      <nav class="links" id="navLinks">
-        <a href="#about">About</a>
-        <a href="#experience">Experience</a>
-        <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-        <a href="#achievements">Achievements</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a href="#contact" class="nav-cta">Let's talk</a>
-      <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+    <!-- ============ NAV ============ -->
+    <header class="site-nav">
+      <div class="nav-inner">
+        <a href="#top" class="brand"><span class="dot"></span>Yash Kumar</a>
+        <nav class="links" id="navLinks">
+          <a href="#about">About</a>
+          <a href="#experience">Experience</a>
+          <a href="#education">Education</a>
+          <a href="#projects">Projects</a>
+          <a href="#skills">Skills</a>
+          <a href="#achievements">Achievements</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a href="#contact" class="nav-cta">Let's talk</a>
+        <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
 
-</head>
+  </head>
 
-<body id="app-root">
   <div
     class="bg-outer-bg text-dark-ink font-secondary py-4 md:py-8 overflow-x-hidden min-h-screen flex flex-col w-full relative">
 
@@ -718,6 +719,5 @@
 </footer>
 
 <script src="script.js"></script>
-</body>
 
 </html>
