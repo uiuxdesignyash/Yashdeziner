@@ -1,120 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<body id="app-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yash Kumar — Product Designer Portfolio</title>
 
-  <head>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Oswald:wght@400;500;700&display=swap"
+    rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;family=Oswald:wght@400;500;700&amp;display=swap"
-      rel="stylesheet">
+  <style>
+    :root {
+      --paper-bg: #F3F1EA;
+      --dark-ink: #1A1A1A;
+    }
 
-    <style>
-      :root {
-        --paper-bg: #F3F1EA;
-        --dark-ink: #1A1A1A;
-      }
+    .animate-on-scroll-hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
 
-      .animate-on-scroll-hidden {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-      }
+    .animate-on-scroll-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      .animate-on-scroll-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .text-stroke {
+      -webkit-text-stroke: 1px var(--dark-ink);
+      color: transparent;
+    }
 
-      .text-stroke {
-        -webkit-text-stroke: 1px var(--dark-ink);
-        color: transparent;
-      }
+    .text-stroke-thin {
+      -webkit-text-stroke: 0.5px var(--dark-ink);
+      color: transparent;
+    }
 
-      .text-stroke-thin {
-        -webkit-text-stroke: 0.5px var(--dark-ink);
-        color: transparent;
-      }
+    .writing-vertical-lr {
+      writing-mode: vertical-lr;
+    }
 
-      .writing-vertical-lr {
-        writing-mode: vertical-lr;
-      }
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
 
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
+    ::-webkit-scrollbar-track {
+      background: #F3F1EA;
+    }
 
-      ::-webkit-scrollbar-track {
-        background: #F3F1EA;
-      }
+    ::-webkit-scrollbar-thumb {
+      background: #1A1A1A;
+    }
+  </style>
 
-      ::-webkit-scrollbar-thumb {
-        background: #1A1A1A;
-      }
-    </style>
-    <link rel="stylesheet" href="/styles.css">
-    <style type="text/tailwindcss">@tailwind base;
-@tailwind components;
-@tailwind utilities;</style>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>tailwind.config = {
-        important: '#app-root',
-        theme: {
-          extend: {
-            colors: {
-              'paper-bg': '#F3F1EA',
-              'outer-bg': '#E5E5E5',
-              'dark-ink': '#1A1A1A',
-              'brand-primary': '#FF4400',
-            },
-            fontFamily: {
-              'primary': ['Oswald', 'sans-serif'],
-              'secondary': ['Inter', 'sans-serif'],
-              'mono': ['monospace'],
-            },
-            animation: {
-              'marquee': 'marquee 20s linear infinite',
-              'spin-slow': 'spin 8s linear infinite',
-            },
-            keyframes: {
-              marquee: {
-                '0%': { transform: 'translateX(0)' },
-                '100%': { transform: 'translateX(-50%)' },
-              }
-            },
-            spacing: {
-              's': '16px',
-              'm': '24px',
-              'l': '32px',
-              'xl': '48px',
+  <!-- FIX: was "/styles.css" (absolute root path) — 404s on any host that
+       doesn't serve the site from the true domain root (e.g. GitHub Pages
+       project sites, subfolder deploys). Relative path works everywhere. -->
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {
+      important: '#app-root',
+      theme: {
+        extend: {
+          colors: {
+            'paper-bg': '#F3F1EA',
+            'outer-bg': '#E5E5E5',
+            'dark-ink': '#1A1A1A',
+            'brand-primary': '#FF4400',
+          },
+          fontFamily: {
+            'primary': ['Oswald', 'sans-serif'],
+            'secondary': ['Inter', 'sans-serif'],
+            'mono': ['monospace'],
+          },
+          animation: {
+            'marquee': 'marquee 20s linear infinite',
+            'spin-slow': 'spin 8s linear infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
             }
+          },
+          spacing: {
+            's': '16px',
+            'm': '24px',
+            'l': '32px',
+            'xl': '48px',
           }
         }
-      }</script>
+      }
+    }</script>
+</head>
 
-    <!-- ============ NAV ============ -->
-    <header class="site-nav">
-      <div class="nav-inner">
-        <a href="#top" class="brand"><span class="dot"></span>Yash Kumar</a>
-        <nav class="links" id="navLinks">
-          <a href="#about">About</a>
-          <a href="#experience">Experience</a>
-          <a href="#education">Education</a>
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#achievements">Achievements</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <a href="#contact" class="nav-cta">Let's talk</a>
-        <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </header>
+<body id="app-root">
 
-  </head>
+  <!-- ============ NAV ============ -->
+  <!-- FIX: this <header> used to be placed INSIDE <head>, which is invalid
+       HTML. Moved here, as the first element in <body>. -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a href="#top" class="brand"><span class="dot"></span>Yash Kumar</a>
+      <nav class="links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="nav-cta">Let's talk</a>
+      <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
 
   <div
     class="bg-outer-bg text-dark-ink font-secondary py-4 md:py-8 overflow-x-hidden min-h-screen flex flex-col w-full relative">
@@ -209,37 +215,33 @@
             <div>
               <div class="flex items-center gap-2 mb-6">
                 <div class="w-2 h-2 bg-dark-ink"></div>
-                <p class="text-xs uppercase tracking-widest text-gray-500 font-mono" data-pixel-id="7bwgt"
-                  data-pixel-kind="text">Featured Case Study</p>
+                <p class="text-xs uppercase tracking-widest text-gray-500 font-mono">Featured Case Study</p>
               </div>
               <h2 class="text-3xl md:text-4xl font-primary font-bold mb-4 text-brand-primary leading-tight uppercase"
-                data-editable="text" data-path="latest_deployment.title" data-pixel-id="axi8n" data-pixel-kind="text">
+                data-editable="text" data-path="latest_deployment.title">
                 LATEST<br>SHIPMENT</h2>
             </div>
             <div>
-              <p class="text-xs uppercase text-gray-500 mb-1 font-mono" data-pixel-id="c71rg" data-pixel-kind="text">
+              <p class="text-xs uppercase text-gray-500 mb-1 font-mono">
                 Total Projects Delivered</p>
-              <div class="text-4xl font-mono font-bold text-dark-ink" data-pixel-id="9rrr1" data-pixel-kind="text">
+              <div class="text-4xl font-mono font-bold text-dark-ink">
                 140+</div>
             </div>
           </div>
           <div class="w-full md:w-3/4 flex flex-col bg-[#EBE9E2]">
             <div class="border-b border-gray-300 flex">
-              <div class="bg-dark-ink text-paper-bg px-3 py-1 text-[10px] uppercase font-bold tracking-wider font-mono"
-                data-pixel-id="vim4e" data-pixel-kind="text">Active Showcase</div>
+              <div class="bg-dark-ink text-paper-bg px-3 py-1 text-[10px] uppercase font-bold tracking-wider font-mono">
+                Active Showcase</div>
               <div
-                class="bg-white border-r border-gray-300 px-3 py-1 text-[10px] uppercase font-bold tracking-wider text-gray-500 font-mono"
-                data-pixel-id="kjy2z" data-pixel-kind="text">Product Design</div>
+                class="bg-white border-r border-gray-300 px-3 py-1 text-[10px] uppercase font-bold tracking-wider text-gray-500 font-mono">
+                Product Design</div>
             </div>
             <div class="flex-1 flex flex-col md:flex-row">
               <a href="/projects/fintech-dashboard"
-                class="w-full md:w-2/3 p-8 lg:p-12 flex flex-col justify-center items-start border-b md:border-b-0 md:border-r border-gray-300 relative overflow-hidden group cursor-pointer bg-white"
-                data-pixel-id="7y5v0" data-pixel-kind="link">
-                <img
-                  src="https://images.pexels.com/photos/32396586/pexels-photo-32396586.jpeg?w=1200&amp;h=800&amp;fit=crop"
+                class="w-full md:w-2/3 p-8 lg:p-12 flex flex-col justify-center items-start border-b md:border-b-0 md:border-r border-gray-300 relative overflow-hidden group cursor-pointer bg-white">
+                <img src="https://images.pexels.com/photos/32396586/pexels-photo-32396586.jpeg?w=1200&h=800&fit=crop"
                   alt="Fintech Dashboard Visual System Mockup"
-                  class="absolute inset-0 w-full h-full object-cover opacity-5 group-hover:opacity-15 transition-opacity duration-500"
-                  data-pixel-verified="true" data-pixel-id="c7a51" data-pixel-kind="image">
+                  class="absolute inset-0 w-full h-full object-cover opacity-5 group-hover:opacity-15 transition-opacity duration-500">
                 <div class="relative z-10">
                   <div class="flex items-center gap-4 mb-6">
                     <svg class="text-dark-ink transform group-hover:translate-x-2 transition-transform duration-300"
@@ -250,40 +252,35 @@
                       <path d="M20 7l-3-3"></path>
                       <path d="M17 20l3-3"></path>
                     </svg>
-                    <h3 class="text-3xl md:text-4xl font-primary font-bold tracking-tight text-dark-ink uppercase"
-                      data-pixel-id="ig960" data-pixel-kind="text">NEXUS PLATFORM V2</h3>
+                    <h3 class="text-3xl md:text-4xl font-primary font-bold tracking-tight text-dark-ink uppercase">NEXUS
+                      PLATFORM V2</h3>
                   </div>
-                  <p class="text-sm text-gray-600 max-w-md leading-relaxed font-secondary" data-pixel-id="9r9xl"
-                    data-pixel-kind="text">A highly scalable transaction workspace and modular design system
+                  <p class="text-sm text-gray-600 max-w-md leading-relaxed font-secondary">A highly scalable transaction
+                    workspace and modular design system
                     engineered specifically for enterprise business dashboards.</p>
                 </div>
               </a>
               <div class="w-full md:w-1/3 flex flex-col bg-[#EBE9E2]">
                 <div class="grid grid-cols-2 h-full">
-                  <div class="p-6 flex flex-col justify-center border-r border-b border-gray-300 bg-paper-bg"
-                    data-pixel-id="z01x1" data-pixel-kind="text">
+                  <div class="p-6 flex flex-col justify-center border-r border-b border-gray-300 bg-paper-bg">
                     <span class="text-2xl md:text-3xl font-primary font-bold block mb-1 text-dark-ink">99.8%</span>
                     <span class="text-[10px] uppercase text-gray-500 tracking-wider font-mono">User Rating</span>
                   </div>
-                  <div class="p-6 flex flex-col justify-center border-b border-gray-300 bg-paper-bg"
-                    data-pixel-id="ilu03" data-pixel-kind="text">
+                  <div class="p-6 flex flex-col justify-center border-b border-gray-300 bg-paper-bg">
                     <span class="text-2xl md:text-3xl font-primary font-bold block mb-1 text-dark-ink">&lt;3-Sec</span>
                     <span class="text-[10px] uppercase text-gray-500 tracking-wider font-mono">Onboarding</span>
                   </div>
-                  <div class="p-6 flex flex-col justify-center border-r border-gray-300 bg-paper-bg"
-                    data-pixel-id="hl7ob" data-pixel-kind="text">
+                  <div class="p-6 flex flex-col justify-center border-r border-gray-300 bg-paper-bg">
                     <span class="text-2xl md:text-3xl font-primary font-bold block mb-1 text-dark-ink">45%</span>
                     <span class="text-[10px] uppercase text-gray-500 tracking-wider font-mono">Task Velocity</span>
                   </div>
-                  <div class="p-6 flex flex-col justify-center bg-paper-bg" data-pixel-id="osjx0"
-                    data-pixel-kind="text">
+                  <div class="p-6 flex flex-col justify-center bg-paper-bg">
                     <span class="text-2xl md:text-3xl font-primary font-bold block mb-1 text-dark-ink">1.2M+</span>
                     <span class="text-[10px] uppercase text-gray-500 tracking-wider font-mono">Active Users</span>
                   </div>
                 </div>
                 <a href="/projects/fintech-dashboard"
-                  class="h-16 border-t border-gray-300 flex items-center justify-center hover:bg-dark-ink hover:text-paper-bg transition-all group bg-white md:bg-transparent"
-                  data-pixel-id="w3or1" data-pixel-kind="link">
+                  class="h-16 border-t border-gray-300 flex items-center justify-center hover:bg-dark-ink hover:text-paper-bg transition-all group bg-white md:bg-transparent">
                   <span
                     class="font-mono text-xs uppercase tracking-widest mr-2 text-dark-ink group-hover:text-paper-bg">View
                     Analytics</span>
@@ -308,36 +305,30 @@
             data-animation-on-scroll="">
             <div class="flex justify-between items-start mb-4">
               <h3 class="text-3xl md:text-4xl font-primary font-bold uppercase" data-editable="text"
-                data-path="projects.items[0].title" data-pixel-id="psf1h" data-pixel-kind="text">Nexus FinTech</h3>
-              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1" data-pixel-id="kuttg"
-                data-pixel-kind="text">
+                data-path="projects.items[0].title">Nexus FinTech</h3>
+              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1">
                 <span class="border border-gray-300 px-1 rounded">2024</span>
                 <span class="border border-gray-300 px-1 rounded uppercase">Dashboard</span>
               </div>
             </div>
             <div class="mb-6">
-              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono" data-pixel-id="t9fmh"
-                data-pixel-kind="text">The Challenge</p>
-              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text" data-path="projects.items[0].challenge"
-                data-pixel-id="l0m19" data-pixel-kind="text">Transforming
+              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono">The Challenge</p>
+              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text"
+                data-path="projects.items[0].challenge">Transforming
                 dense banking data into actionable insights for SMB owners with zero financial background.</p>
             </div>
-            <div class="flex flex-wrap gap-2 mb-6" data-pixel-id="abfh0" data-pixel-kind="text">
+            <div class="flex flex-wrap gap-2 mb-6">
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Fintech</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">SaaS</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Data Viz</span>
             </div>
             <a href="/projects/fintech-dashboard"
-              class="mt-auto block overflow-hidden bg-gray-200 aspect-[16/10] relative" data-pixel-id="ec0gl"
-              data-pixel-kind="link">
-              <img
-                src="https://images.pexels.com/photos/36136699/pexels-photo-36136699.jpeg?w=1200&amp;h=750&amp;fit=crop"
+              class="mt-auto block overflow-hidden bg-gray-200 aspect-[16/10] relative">
+              <img src="https://images.pexels.com/photos/36136699/pexels-photo-36136699.jpeg?w=1200&h=750&fit=crop"
                 alt="Fintech Project"
-                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                data-pixel-verified="true" data-pixel-id="b0l3a" data-pixel-kind="image">
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105">
               <div
-                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                data-pixel-id="fte7d" data-pixel-kind="text">
+                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span class="text-white font-mono text-xs border border-white px-4 py-2 uppercase tracking-widest">View
                   Case Study</span>
               </div>
@@ -347,34 +338,29 @@
           <article class="border-b border-gray-300 p-6 md:p-10 flex flex-col h-full group" data-animation-on-scroll="">
             <div class="flex justify-between items-start mb-4">
               <h3 class="text-3xl md:text-4xl font-primary font-bold uppercase" data-editable="text"
-                data-path="projects.items[1].title" data-pixel-id="3ox5n" data-pixel-kind="text">EcoShop App</h3>
-              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1" data-pixel-id="76rfg"
-                data-pixel-kind="text">
+                data-path="projects.items[1].title">EcoShop App</h3>
+              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1">
                 <span class="border border-gray-300 px-1 rounded">2023</span>
                 <span class="border border-gray-300 px-1 rounded uppercase">Mobile</span>
               </div>
             </div>
             <div class="mb-6">
-              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono" data-pixel-id="nbywm"
-                data-pixel-kind="text">The Challenge</p>
-              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text" data-path="projects.items[1].challenge"
-                data-pixel-id="e5hp3" data-pixel-kind="text">Reducing a 42%
+              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono">The Challenge</p>
+              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text"
+                data-path="projects.items[1].challenge">Reducing a 42%
                 cart abandonment rate by redesigning the checkout flow for mobile-first shoppers.</p>
             </div>
-            <div class="flex flex-wrap gap-2 mb-6" data-pixel-id="1khaa" data-pixel-kind="text">
+            <div class="flex flex-wrap gap-2 mb-6">
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">E-Commerce</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">B2C</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">UX Research</span>
             </div>
             <div class="mt-auto overflow-hidden bg-gray-200 aspect-[16/10] relative">
-              <img
-                src="https://images.pexels.com/photos/5076511/pexels-photo-5076511.jpeg?w=1200&amp;h=750&amp;fit=crop"
+              <img src="https://images.pexels.com/photos/5076511/pexels-photo-5076511.jpeg?w=1200&h=750&fit=crop"
                 alt="E-commerce Project"
-                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                data-pixel-verified="true" data-pixel-id="80oou" data-pixel-kind="image">
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105">
               <div
-                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                data-pixel-id="72r80" data-pixel-kind="text">
+                class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                 <span class="text-white font-mono text-xs border border-white px-4 py-2 uppercase tracking-widest">Case
                   Study Coming Soon</span>
               </div>
@@ -385,67 +371,307 @@
             data-animation-on-scroll="">
             <div class="flex justify-between items-start mb-4">
               <h3 class="text-3xl md:text-4xl font-primary font-bold uppercase" data-editable="text"
-                data-path="projects.items[2].title" data-pixel-id="xtcoh" data-pixel-kind="text">MediCare Web</h3>
-              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1" data-pixel-id="ivfaq"
-                data-pixel-kind="text">
+                data-path="projects.items[2].title">MediCare Web</h3>
+              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1">
                 <span class="border border-gray-300 px-1 rounded">2023</span>
                 <span class="border border-gray-300 px-1 rounded uppercase">HealthTech</span>
               </div>
             </div>
             <div class="mb-6">
-              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono" data-pixel-id="88fv5"
-                data-pixel-kind="text">The Challenge</p>
-              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text" data-path="projects.items[2].challenge"
-                data-pixel-id="hgo0a" data-pixel-kind="text">Improving
+              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono">The Challenge</p>
+              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text"
+                data-path="projects.items[2].challenge">Improving
                 patient record accessibility for elderly practitioners and minimizing interface friction.</p>
             </div>
-            <div class="flex flex-wrap gap-2 mb-6" data-pixel-id="4d3z5" data-pixel-kind="text">
+            <div class="flex flex-wrap gap-2 mb-6">
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Healthcare</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Accessibility</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">B2B</span>
             </div>
             <div class="mt-auto overflow-hidden bg-gray-200 aspect-[16/10] relative">
-              <img
-                src="https://images.pexels.com/photos/27141307/pexels-photo-27141307.jpeg?w=1200&amp;h=750&amp;fit=crop"
+              <img src="https://images.pexels.com/photos/27141307/pexels-photo-27141307.jpeg?w=1200&h=750&fit=crop"
                 alt="Healthcare Project"
-                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                data-pixel-verified="true" data-pixel-id="uge9b" data-pixel-kind="image">
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105">
             </div>
           </article>
 
           <article class="p-6 md:p-10 flex flex-col h-full group" data-animation-on-scroll="">
             <div class="flex justify-between items-start mb-4">
               <h3 class="text-3xl md:text-4xl font-primary font-bold uppercase" data-editable="text"
-                data-path="projects.items[3].title" data-pixel-id="bo4aj" data-pixel-kind="text">Voyage Planner</h3>
-              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1" data-pixel-id="lzsua"
-                data-pixel-kind="text">
+                data-path="projects.items[3].title">Voyage Planner</h3>
+              <div class="flex flex-col text-[10px] text-gray-500 font-mono text-right gap-1">
                 <span class="border border-gray-300 px-1 rounded">2022</span>
                 <span class="border border-gray-300 px-1 rounded uppercase">Travel</span>
               </div>
             </div>
             <div class="mb-6">
-              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono" data-pixel-id="63aoe"
-                data-pixel-kind="text">The Challenge</p>
-              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text" data-path="projects.items[3].challenge"
-                data-pixel-id="8axe3" data-pixel-kind="text">Redesigning a
+              <p class="text-xs text-gray-800 font-bold mb-2 uppercase font-mono">The Challenge</p>
+              <p class="text-sm text-gray-600 line-clamp-2" data-editable="text"
+                data-path="projects.items[3].challenge">Redesigning a
                 fragmented booking experience across multiple service providers into a single flow.</p>
             </div>
-            <div class="flex flex-wrap gap-2 mb-6" data-pixel-id="gi5az" data-pixel-kind="text">
+            <div class="flex flex-wrap gap-2 mb-6">
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Travel</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Interaction Design</span>
               <span class="text-[10px] font-mono bg-gray-200 px-2 py-1 rounded uppercase">Prototyping</span>
             </div>
             <div class="mt-auto overflow-hidden bg-gray-200 aspect-[16/10] relative">
-              <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?w=1200&amp;h=750&amp;fit=crop"
+              <img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?w=1200&h=750&fit=crop"
                 alt="Travel Project"
-                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                data-pixel-verified="true" data-pixel-id="toiq8" data-pixel-kind="image">
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105">
             </div>
           </article>
         </section>
 
       </main>
+
+      <!-- ============ ABOUT ============ -->
+      <!-- FIX: this section (and Experience / Education / Achievements / Contact
+           below) used to sit AFTER a stray "</body></html>" close, meaning the
+           browser had to silently repair broken markup. Now it's a normal part
+           of the single, valid document body. -->
+      <section class="about sec-pad" id="about">
+        <div class="wrap">
+          <p class="eyebrow reveal">About Me</p>
+          <div class="stack-heading reveal">
+            <div class="fill">Who I Am</div>
+            <div class="ghost">Who I Am</div>
+          </div>
+          <div class="about-grid" style="margin-top: 40px;">
+            <div class="about-text reveal">
+              <p>I'm a product designer with a passion for turning complex systems into clear, intuitive experiences. My
+                work spans SaaS platforms, fintech dashboards, and mobile-first consumer apps.</p>
+              <p>I specialize in user research, interaction design, and building scalable design systems. I believe
+                great design is invisible — it just works. Every pixel, every micro-interaction, every content decision
+                should serve the user first.</p>
+              <p>Currently working as a UX Researcher at Zeproc, where I drive user-centered improvements across
+                procurement workflows.</p>
+              <div class="stat-row">
+                <div>
+                  <div class="stat-num">10+</div>
+                  <div class="stat-label">Projects Shipped</div>
+                </div>
+                <div>
+                  <div class="stat-num">3+</div>
+                  <div class="stat-label">Years Experience</div>
+                </div>
+                <div>
+                  <div class="stat-num">5+</div>
+                  <div class="stat-label">Industries</div>
+                </div>
+              </div>
+            </div>
+            <div class="about-aside reveal">
+              <h4>Design Tools</h4>
+              <div class="ai-tools">
+                <span>Figma</span>
+                <span>Adobe XD</span>
+                <span>Photoshop</span>
+                <span>Illustrator</span>
+                <span>After Effects</span>
+                <span>Blender</span>
+              </div>
+              <h4>AI-Powered Workflow</h4>
+              <div class="ai-tools">
+                <span>ChatGPT</span>
+                <span>Midjourney</span>
+                <span>Galileo AI</span>
+                <span>Framer AI</span>
+                <span>Figma AI</span>
+              </div>
+              <h4>Dev &amp; Collaboration</h4>
+              <div class="ai-tools">
+                <span>HTML / CSS</span>
+                <span>JavaScript</span>
+                <span>React</span>
+                <span>Git</span>
+                <span>Notion</span>
+                <span>Jira</span>
+                <span>Miro</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ EXPERIENCE ============ -->
+      <section class="experience sec-pad on-dark" id="experience">
+        <div class="wrap">
+          <p class="eyebrow on-dark reveal">Experience</p>
+          <div class="stack-heading reveal">
+            <div class="fill">Where I've Worked</div>
+            <div class="ghost">Where I've Worked</div>
+          </div>
+          <div class="exp-list" style="margin-top: 36px;">
+
+            <div class="exp-row reveal">
+              <div class="exp-period">2024 — Now</div>
+              <div class="exp-main">
+                <h3>User Experience Researcher</h3>
+                <div class="exp-org">Zeproc · E-Procurement SaaS</div>
+                <ul>
+                  <li>Conducted heuristic evaluations &amp; usability testing across procurement modules, resulting in
+                    30% reduction in task completion time</li>
+                  <li>Built a component library in Figma aligned with WCAG 2.1 AA standards</li>
+                  <li>Collaborated with PMs and engineers to translate research insights into actionable design
+                    improvements</li>
+                </ul>
+              </div>
+              <div class="exp-loc">Delhi, India</div>
+            </div>
+
+            <div class="exp-row reveal">
+              <div class="exp-period">2023 — 2024</div>
+              <div class="exp-main">
+                <h3>UI/UX Designer</h3>
+                <div class="exp-org">Sahvo · Tourist Safety App</div>
+                <ul>
+                  <li>Designed end-to-end mobile experience for a tourist safety &amp; assistance platform</li>
+                  <li>Created 14+ screens including SOS alerts, incident reporting, local emergency contacts, and
+                    real-time location sharing</li>
+                  <li>Integrated Razorpay payment flow and optimized onboarding conversion by 25%</li>
+                </ul>
+              </div>
+              <div class="exp-loc">Remote</div>
+            </div>
+
+            <div class="exp-row reveal">
+              <div class="exp-period">2023</div>
+              <div class="exp-main">
+                <h3>Data Analytics Intern</h3>
+                <div class="exp-org">MeriSKILL</div>
+                <ul>
+                  <li>Analyzed sales datasets using Python &amp; Power BI to create interactive dashboards</li>
+                  <li>Presented data-driven insights that informed product feature prioritization</li>
+                </ul>
+              </div>
+              <div class="exp-loc">Remote</div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ EDUCATION ============ -->
+      <section class="education sec-pad" id="education">
+        <div class="wrap">
+          <p class="eyebrow reveal">Education</p>
+          <div class="stack-heading reveal">
+            <div class="fill">Credentials</div>
+            <div class="ghost">Credentials</div>
+          </div>
+          <div class="edu-grid" style="margin-top: 36px;">
+
+            <div class="edu-card reveal">
+              <div class="edu-year">2021 — 2025</div>
+              <div>
+                <h3>B.Tech in Computer Science</h3>
+                <div class="edu-org">Guru Gobind Singh Indraprastha University, Delhi</div>
+                <div class="edu-cert">
+                  <b>Focus:</b>&nbsp;Human-Computer Interaction, Data Structures, Software Engineering
+                </div>
+              </div>
+            </div>
+
+            <div class="edu-card reveal">
+              <div class="edu-year">2023</div>
+              <div>
+                <h3>Google UX Design Certificate</h3>
+                <div class="edu-org">Coursera · Google</div>
+                <div class="edu-cert">
+                  <b>Topics:</b>&nbsp;UX Research, Wireframing, Prototyping, Usability Testing, Design Systems
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ACHIEVEMENTS ============ -->
+      <section class="achievements sec-pad on-dark" id="achievements">
+        <div class="wrap">
+          <p class="eyebrow on-dark reveal">Achievements</p>
+          <div class="stack-heading reveal">
+            <div class="fill">Recognition</div>
+            <div class="ghost">Recognition</div>
+          </div>
+          <div class="ach-list reveal" style="margin-top: 36px;">
+
+            <div class="ach-item">
+              <div class="ach-mark">★</div>
+              <div>
+                <h4>Google UX Design Professional Certificate</h4>
+                <p>Completed all 7 courses in the Google UX Design specialization on Coursera</p>
+              </div>
+            </div>
+
+            <div class="ach-item">
+              <div class="ach-mark">🏆</div>
+              <div>
+                <h4>Smart India Hackathon — Finalist</h4>
+                <p>Designed &amp; pitched a citizen-centric public grievance platform at SIH 2023</p>
+              </div>
+            </div>
+
+            <div class="ach-item">
+              <div class="ach-mark">🎯</div>
+              <div>
+                <h4>HackerRank Problem Solving (Intermediate)</h4>
+                <p>Certified in data structures &amp; algorithms on HackerRank</p>
+              </div>
+            </div>
+
+            <div class="ach-item">
+              <div class="ach-mark">📊</div>
+              <div>
+                <h4>MeriSKILL — Data Analytics Certificate</h4>
+                <p>Power BI dashboards, Python analytics, and data storytelling</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section class="p-8 md:p-16 pb-32" id="contact" data-animation-on-scroll="">
+        <h2
+          class="text-[5rem] md:text-[8rem] lg:text-[11rem] leading-none font-primary font-bold text-dark-ink mb-[-1rem] md:mb-[-2rem]">
+          CONTACT</h2>
+        <h2
+          class="text-[5rem] md:text-[8rem] lg:text-[11rem] leading-none font-primary font-bold text-stroke mb-12 uppercase">
+          Reach Out</h2>
+
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-end font-mono text-xs uppercase tracking-wide border-t-2 border-black pt-6">
+          <div class="flex flex-col gap-2 mb-8 md:mb-0">
+            <span class="font-bold mb-2 text-gray-400">Socials</span>
+            <a href="https://www.linkedin.com/in/yashkumaruiux/" target="_blank" class="hover:underline">LinkedIn</a>
+            <a href="#" class="hover:underline">Dribbble</a>
+            <a href="#" class="hover:underline">Behance</a>
+          </div>
+
+          <div class="flex flex-col gap-2 text-right w-full md:w-auto">
+            <span class="font-bold mb-2 text-gray-400">Project Inquiry</span>
+            <a href="tel:+918860676994" class="hover:underline">+91 88606 76994</a>
+            <a href="mailto:Design.yashk@gmail.com" class="hover:underline font-bold text-lg" data-editable="text"
+              data-path="footer.email">Design.yashk@gmail.com</a>
+          </div>
+        </div>
+      </section>
+
+    </main>
   </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap"
+      style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <span>© <span id="year">2026</span> Yash Kumar. Designed &amp; coded with craft.</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -472,252 +698,9 @@
       });
     });
   </script>
+
+  <!-- FIX: relative path, loads correctly regardless of deploy subpath -->
+  <script src="script.js"></script>
 </body>
-
-<!-- ============ ABOUT ============ -->
-<section class="about sec-pad" id="about">
-  <div class="wrap">
-    <p class="eyebrow reveal">About Me</p>
-    <div class="stack-heading reveal">
-      <div class="fill">Who I Am</div>
-      <div class="ghost">Who I Am</div>
-    </div>
-    <div class="about-grid" style="margin-top: 40px;">
-      <div class="about-text reveal">
-        <p>I'm a product designer with a passion for turning complex systems into clear, intuitive experiences. My
-          work spans SaaS platforms, fintech dashboards, and mobile-first consumer apps.</p>
-        <p>I specialize in user research, interaction design, and building scalable design systems. I believe
-          great
-          design is invisible — it just works. Every pixel, every micro-interaction, every content decision should
-          serve the user first.</p>
-        <p>Currently working as a UX Researcher at Zeproc, where I drive user-centered improvements across
-          procurement workflows.</p>
-        <div class="stat-row">
-          <div>
-            <div class="stat-num">10+</div>
-            <div class="stat-label">Projects Shipped</div>
-          </div>
-          <div>
-            <div class="stat-num">3+</div>
-            <div class="stat-label">Years Experience</div>
-          </div>
-          <div>
-            <div class="stat-num">5+</div>
-            <div class="stat-label">Industries</div>
-          </div>
-        </div>
-      </div>
-      <div class="about-aside reveal">
-        <h4>Design Tools</h4>
-        <div class="ai-tools">
-          <span>Figma</span>
-          <span>Adobe XD</span>
-          <span>Photoshop</span>
-          <span>Illustrator</span>
-          <span>After Effects</span>
-          <span>Blender</span>
-        </div>
-        <h4>AI-Powered Workflow</h4>
-        <div class="ai-tools">
-          <span>ChatGPT</span>
-          <span>Midjourney</span>
-          <span>Galileo AI</span>
-          <span>Framer AI</span>
-          <span>Figma AI</span>
-        </div>
-        <h4>Dev & Collaboration</h4>
-        <div class="ai-tools">
-          <span>HTML / CSS</span>
-          <span>JavaScript</span>
-          <span>React</span>
-          <span>Git</span>
-          <span>Notion</span>
-          <span>Jira</span>
-          <span>Miro</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ EXPERIENCE ============ -->
-<section class="experience sec-pad on-dark" id="experience">
-  <div class="wrap">
-    <p class="eyebrow on-dark reveal">Experience</p>
-    <div class="stack-heading reveal">
-      <div class="fill">Where I've Worked</div>
-      <div class="ghost">Where I've Worked</div>
-    </div>
-    <div class="exp-list" style="margin-top: 36px;">
-
-      <div class="exp-row reveal">
-        <div class="exp-period">2024 — Now</div>
-        <div class="exp-main">
-          <h3>User Experience Researcher</h3>
-          <div class="exp-org">Zeproc · E-Procurement SaaS</div>
-          <ul>
-            <li>Conducted heuristic evaluations &amp; usability testing across procurement modules, resulting in
-              30%
-              reduction in task completion time</li>
-            <li>Built a component library in Figma aligned with WCAG 2.1 AA standards</li>
-            <li>Collaborated with PMs and engineers to translate research insights into actionable design
-              improvements</li>
-          </ul>
-        </div>
-        <div class="exp-loc">Delhi, India</div>
-      </div>
-
-      <div class="exp-row reveal">
-        <div class="exp-period">2023 — 2024</div>
-        <div class="exp-main">
-          <h3>UI/UX Designer</h3>
-          <div class="exp-org">Sahvo · Tourist Safety App</div>
-          <ul>
-            <li>Designed end-to-end mobile experience for a tourist safety &amp; assistance platform</li>
-            <li>Created 14+ screens including SOS alerts, incident reporting, local emergency contacts, and
-              real-time location sharing</li>
-            <li>Integrated Razorpay payment flow and optimized onboarding conversion by 25%</li>
-          </ul>
-        </div>
-        <div class="exp-loc">Remote</div>
-      </div>
-
-      <div class="exp-row reveal">
-        <div class="exp-period">2023</div>
-        <div class="exp-main">
-          <h3>Data Analytics Intern</h3>
-          <div class="exp-org">MeriSKILL</div>
-          <ul>
-            <li>Analyzed sales datasets using Python &amp; Power BI to create interactive dashboards</li>
-            <li>Presented data-driven insights that informed product feature prioritization</li>
-          </ul>
-        </div>
-        <div class="exp-loc">Remote</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ EDUCATION ============ -->
-<section class="education sec-pad" id="education">
-  <div class="wrap">
-    <p class="eyebrow reveal">Education</p>
-    <div class="stack-heading reveal">
-      <div class="fill">Credentials</div>
-      <div class="ghost">Credentials</div>
-    </div>
-    <div class="edu-grid" style="margin-top: 36px;">
-
-      <div class="edu-card reveal">
-        <div class="edu-year">2021 — 2025</div>
-        <div>
-          <h3>B.Tech in Computer Science</h3>
-          <div class="edu-org">Guru Gobind Singh Indraprastha University, Delhi</div>
-          <div class="edu-cert">
-            <b>Focus:</b>&nbsp;Human-Computer Interaction, Data Structures, Software Engineering
-          </div>
-        </div>
-      </div>
-
-      <div class="edu-card reveal">
-        <div class="edu-year">2023</div>
-        <div>
-          <h3>Google UX Design Certificate</h3>
-          <div class="edu-org">Coursera · Google</div>
-          <div class="edu-cert">
-            <b>Topics:</b>&nbsp;UX Research, Wireframing, Prototyping, Usability Testing, Design Systems
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ ACHIEVEMENTS ============ -->
-<section class="achievements sec-pad on-dark" id="achievements">
-  <div class="wrap">
-    <p class="eyebrow on-dark reveal">Achievements</p>
-    <div class="stack-heading reveal">
-      <div class="fill">Recognition</div>
-      <div class="ghost">Recognition</div>
-    </div>
-    <div class="ach-list reveal" style="margin-top: 36px;">
-
-      <div class="ach-item">
-        <div class="ach-mark">★</div>
-        <div>
-          <h4>Google UX Design Professional Certificate</h4>
-          <p>Completed all 7 courses in the Google UX Design specialization on Coursera</p>
-        </div>
-      </div>
-
-      <div class="ach-item">
-        <div class="ach-mark">🏆</div>
-        <div>
-          <h4>Smart India Hackathon — Finalist</h4>
-          <p>Designed &amp; pitched a citizen-centric public grievance platform at SIH 2023</p>
-        </div>
-      </div>
-
-      <div class="ach-item">
-        <div class="ach-mark">🎯</div>
-        <div>
-          <h4>HackerRank Problem Solving (Intermediate)</h4>
-          <p>Certified in data structures &amp; algorithms on HackerRank</p>
-        </div>
-      </div>
-
-      <div class="ach-item">
-        <div class="ach-mark">📊</div>
-        <div>
-          <h4>MeriSKILL — Data Analytics Certificate</h4>
-          <p>Power BI dashboards, Python analytics, and data storytelling</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="p-8 md:p-16 pb-32" data-animation-on-scroll="">
-  <h2
-    class="text-[5rem] md:text-[8rem] lg:text-[11rem] leading-none font-primary font-bold text-dark-ink mb-[-1rem] md:mb-[-2rem]"
-    data-pixel-id="r0ff8" data-pixel-kind="text">CONTACT</h2>
-  <h2 class="text-[5rem] md:text-[8rem] lg:text-[11rem] leading-none font-primary font-bold text-stroke mb-12 uppercase"
-    data-pixel-id="2o0uh" data-pixel-kind="text">Reach Out</h2>
-
-  <div
-    class="flex flex-col md:flex-row justify-between items-start md:items-end font-mono text-xs uppercase tracking-wide border-t-2 border-black pt-6">
-    <div class="flex flex-col gap-2 mb-8 md:mb-0" data-pixel-id="b1qu2" data-pixel-kind="text">
-      <span class="font-bold mb-2 text-gray-400">Socials</span>
-      <a href="https://www.linkedin.com/in/yashkumaruiux/" target="_blank" class="hover:underline" data-pixel-id="21xd2"
-        data-pixel-kind="link">LinkedIn</a>
-      <a href="#" class="hover:underline" data-pixel-id="i60t3" data-pixel-kind="link">Dribbble</a>
-      <a href="#" class="hover:underline" data-pixel-id="d3pfi" data-pixel-kind="link">Behance</a>
-    </div>
-
-    <div class="flex flex-col gap-2 text-right w-full md:w-auto" data-pixel-id="nav11" data-pixel-kind="text">
-      <span class="font-bold mb-2 text-gray-400">Project Inquiry</span>
-      <a href="tel:+1234567890" class="hover:underline" data-pixel-id="0xjov" data-pixel-kind="link">+91 88606 76994</a>
-      <a href="mailto:yash.kumar.97739@gmail.com" class="hover:underline font-bold text-lg" data-editable="text"
-        data-path="footer.email" data-pixel-id="3adnk" data-pixel-kind="link">Design.yashk@gmail.com</a>
-    </div>
-  </div>
-</section>
-
-</main>
-
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
-    <span>© <span id="year">2026</span> Yash Kumar. Designed &amp; coded with craft.</span>
-    <a href="#top">Back to top ↑</a>
-  </div>
-</footer>
-
-<script src="script.js"></script>
 
 </html>
