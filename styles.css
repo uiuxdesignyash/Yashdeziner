@@ -651,7 +651,7 @@ nav.links a:hover::after {
   transition: background 0.25s ease;
 }
 
-.exp-row > * {
+.exp-row>* {
   transition: transform 0.25s ease;
 }
 
@@ -659,7 +659,7 @@ nav.links a:hover::after {
   background: rgba(255, 255, 255, 0.025);
 }
 
-.exp-row:hover > * {
+.exp-row:hover>* {
   transform: translateX(10px);
 }
 
