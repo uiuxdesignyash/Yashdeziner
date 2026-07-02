@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Designare — Yash Kumar | UI/UX Designer</title>
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Oswald:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../favicon/apple-touch-icon.png">
+
+  <style>
+    :root {
+      --paper-bg: #F3F1EA;
+      --dark-ink: #1A1A1A;
+    }
+
+    .animate-on-scroll-hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+
+    .animate-on-scroll-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .text-stroke {
+      -webkit-text-stroke: 1px var(--dark-ink);
+      color: transparent;
+    }
+
+    .text-stroke-thin {
+      -webkit-text-stroke: 0.5px var(--dark-ink);
+      color: transparent;
+    }
+
+    .writing-vertical-lr {
+      writing-mode: vertical-lr;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F3F1EA;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #1A1A1A;
+    }
+  </style>
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <style type="text/tailwindcss">@tailwind base;
+@tailwind components;
+@tailwind utilities;</style>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = {
+      important: '#app-root',
+      theme: {
+        extend: {
+          colors: {
+            'paper-bg': '#F3F1EA',
+            'outer-bg': '#E5E5E5',
+            'dark-ink': '#1A1A1A',
+            'brand-primary': '#1A1A1A',
+          },
+          fontFamily: {
+            'primary': ['Oswald', 'sans-serif'],
+            'secondary': ['Inter', 'sans-serif'],
+            'mono': ['monospace'],
+          },
+          animation: {
+            'marquee': 'marquee 20s linear infinite',
+            'spin-slow': 'spin 8s linear infinite',
+          },
+          keyframes: {
+            marquee: {
+              '0%': { transform: 'translateX(0)' },
+              '100%': { transform: 'translateX(-50%)' },
+            }
+          },
+          spacing: {
+            's': '16px',
+            'm': '24px',
+            'l': '32px',
+            'xl': '48px',
+          }
+        }
+      }
+    }</script>
+</head>
+
+<body id="app-root">
+
+  <!-- ============ NAV ============ -->
+  <header class="site-nav">
+    <div class="nav-inner">
+      <a href="/" class="brand"><span class="dot"></span>Yash Kumar</a>
+      <nav class="links" id="navLinks">
+        <a href="/#about">About</a>
+        <a href="/#experience">Experience</a>
+        <a href="/#education">Education</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#achievements">Achievements</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a href="/#contact" class="nav-cta">Let's talk</a>
+      <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div
+    class="bg-outer-bg text-dark-ink font-secondary py-4 md:py-8 overflow-x-hidden min-h-screen flex flex-col w-full relative">
+
+    <!-- Top Technical Bar -->
+    <div
+      class="max-w-[1440px] mx-auto w-full mb-4 px-4 flex justify-between items-center text-[10px] md:text-xs tracking-widest text-gray-500 uppercase font-mono">
+      <div class="flex items-center gap-4">
+        <span
+          class="border border-gray-400 rounded-full w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">04</span>
+        <div class="h-[1px] w-12 md:w-24 bg-gray-400"></div>
+        <a href="/" class="hover:text-dark-ink transition-colors">Yash Kumar</a>
+      </div>
+      <div class="flex gap-4">
+        <a href="/#projects" class="hover:text-dark-ink transition-colors">PROJECTS</a>
+        <a href="/#experience" class="hover:text-dark-ink transition-colors">EXPERIENCE</a>
+        <span class="mx-2 hidden md:inline">+</span>
+        <span class="hidden md:inline">PRODUCT DESIGNER</span>
+      </div>
+    </div>
+
+    <!-- Main Paper Container -->
+    <main
+      class="bg-paper-bg max-w-[1440px] mx-auto border-x border-gray-300 shadow-[0_0_50px_rgba(0,0,0,0.05)] flex-grow relative w-full">
+      <article class="relative">
+        <!-- Project Header -->
+        <header class="p-6 md:p-12 border-b border-gray-300">
+          <a href="/"
+            class="inline-flex items-center gap-2 font-mono text-xs uppercase text-gray-500 hover:text-dark-ink mb-12 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            Back to Portfolio
+          </a>
+
+          <div class="flex flex-col md:flex-row justify-between items-end gap-8" data-animation-on-scroll="">
+            <div class="max-w-2xl">
+              <h1 class="text-5xl md:text-8xl font-primary font-bold uppercase mb-4">Designare</h1>
+              <p class="text-xl md:text-2xl text-gray-600 font-secondary">Conference website unifying a fragmented
+                booking experience into a single flow.</p>
+            </div>
+            <div class="flex flex-col gap-4 font-mono text-xs uppercase border-l border-gray-300 pl-6 w-full md:w-auto">
+              <div>
+                <span class="text-gray-400 block mb-1">Timeline</span>
+                <span class="font-bold">2 Months (2025)</span>
+              </div>
+              <div>
+                <span class="text-gray-400 block mb-1">Client</span>
+                <span class="font-bold">Designare</span>
+              </div>
+              <div>
+                <span class="text-gray-400 block mb-1">Role</span>
+                <span class="font-bold">UI/UX Designer</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Image -->
+        <section class="border-b border-gray-300" data-animation-on-scroll="">
+          <div class="w-full aspect-[21/9] overflow-hidden bg-gray-100">
+            <img src="../Projects/Designare/Frame 15.png" alt="Designare Cover" class="w-full h-full object-cover" width="5760" height="3234" loading="eager" fetchpriority="high" decoding="async">
+          </div>
+        </section>
+
+        <!-- Problem & Solution Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 border-b border-gray-300">
+          <div class="p-8 md:p-16 border-b md:border-b-0 md:border-r border-gray-300" data-animation-on-scroll="">
+            <span class="font-mono text-gray-400 block mb-4">THE CHALLENGE</span>
+            <h2 class="text-3xl md:text-4xl font-primary font-bold uppercase mb-6">Fragmented Booking</h2>
+            <p class="text-gray-700 leading-relaxed mb-6">
+              The existing conference experience was scattered across multiple service providers — attendees had to
+              navigate separate platforms for registration, agenda browsing, and speaker information. This fragmented
+              journey caused drop-offs, confusion, and a disjointed brand experience that undermined the event's
+              credibility.
+            </p>
+          </div>
+          <div class="p-8 md:p-16" data-animation-on-scroll="">
+            <span class="font-mono text-gray-400 block mb-4">THE SOLUTION</span>
+            <h2 class="text-3xl md:text-4xl font-primary font-bold uppercase mb-6">One Seamless Platform</h2>
+            <p class="text-gray-700 leading-relaxed">
+              We designed a clean, modern event website that unifies registration, agenda browsing, speaker profiles,
+              and venue details into a single cohesive flow. With dynamic interaction design and a bold visual identity,
+              the platform elevates the conference brand while reducing booking friction to near-zero.
+            </p>
+          </div>
+        </section>
+
+        <!-- Process Detail -->
+        <section class="p-8 md:p-16 bg-[#EBE9E2]" data-animation-on-scroll="">
+          <div class="max-w-4xl mx-auto">
+            <h3 class="text-2xl md:text-3xl font-primary font-bold uppercase mb-12 text-center">Development Process</h3>
+            <div class="space-y-12">
+              <div class="flex gap-8">
+                <span class="font-mono text-3xl font-bold text-gray-300">01</span>
+                <div>
+                  <h4 class="font-primary font-bold text-xl uppercase mb-2">Competitive Analysis</h4>
+                  <p class="text-sm text-gray-600">Analyzed leading conference and event platforms to identify best
+                    practices in registration UX, agenda navigation, and speaker showcase patterns.</p>
+                </div>
+              </div>
+              <div class="flex gap-8">
+                <span class="font-mono text-3xl font-bold text-gray-300">02</span>
+                <div>
+                  <h4 class="font-primary font-bold text-xl uppercase mb-2">Wireframing &amp; Prototyping</h4>
+                  <p class="text-sm text-gray-600">Built interactive wireframes mapping the complete attendee journey —
+                    from landing page to confirmed registration — testing multiple layout approaches for content
+                    density.</p>
+                </div>
+              </div>
+              <div class="flex gap-8">
+                <span class="font-mono text-3xl font-bold text-gray-300">03</span>
+                <div>
+                  <h4 class="font-primary font-bold text-xl uppercase mb-2">Visual Design &amp; Handoff</h4>
+                  <p class="text-sm text-gray-600">Crafted a bold, energetic visual language with dynamic typography,
+                    vibrant gradients, and responsive layouts. Delivered pixel-perfect specs and annotated handoff
+                    documentation in Figma.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Main Image -->
+        <section class="border-b border-gray-300" data-animation-on-scroll="">
+          <div class="w-full h-full aspect-[21/65] overflow-hidden bg-gray-100">
+            <img src="../Projects/Designare/Home page 2.png" alt="Designare Cover" class="w-full h-full object-cover" width="7680" height="23344" loading="lazy" decoding="async">
+          </div>
+        </section>
+
+        <!-- Footer CTA -->
+        <footer class="p-12 md:p-24 text-center border-t border-gray-300">
+          <h2 class="text-4xl md:text-6xl font-primary font-bold uppercase mb-8">Next Project</h2>
+          <a href="/Clubdulz/" class="group">
+            <span
+              class="text-5xl md:text-[8rem] font-primary font-bold text-stroke group-hover:text-dark-ink transition-all duration-500 uppercase">ClubDuelz</span>
+          </a>
+        </footer>
+      </article>
+    </main>
+
+    <!-- Bottom Decoration -->
+    <div class="fixed bottom-0 left-0 w-full h-2 bg-dark-ink z-50"></div>
+
+    <!-- Go To Top Button -->
+    <button id="scroll-to-top"
+      class="fixed bottom-8 right-8 z-50 bg-dark-ink text-white w-12 h-12 flex items-center justify-center rounded-full shadow-xl opacity-0 pointer-events-none transition-all duration-300 hover:bg-gray-800 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+      aria-label="Scroll to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 15-6-6-6 6"></path>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap"
+      style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
+      <span>&copy; <span id="year">2026</span> Yash Kumar. Designed &amp; coded with craft.</span>
+      <a href="/#top">Back to top &uarr;</a>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-on-scroll-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.05 });
+
+      document.querySelectorAll('[data-animation-on-scroll]').forEach(el => {
+        el.classList.add('animate-on-scroll-hidden');
+        observer.observe(el);
+      });
+
+      const scrollToTopBtn = document.getElementById('scroll-to-top');
+      if (scrollToTopBtn) {
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+            scrollToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+            scrollToTopBtn.classList.add('opacity-100', 'pointer-events-auto');
+          } else {
+            scrollToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+            scrollToTopBtn.classList.remove('opacity-100', 'pointer-events-auto');
+          }
+        });
+        scrollToTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
+  </script>
+
+  <script src="../script.js"></script>
+</body>
+
+</html>
