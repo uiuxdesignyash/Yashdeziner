@@ -56,6 +56,9 @@ export const FeatureIcon: React.FC<{
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
+            // A round cap on a fully-offset dash still paints a start dot —
+            // keep the path invisible until its draw begins.
+            opacity={frame >= start ? 1 : 0}
             pathLength={1}
             strokeDasharray={1}
             strokeDashoffset={interpolate(

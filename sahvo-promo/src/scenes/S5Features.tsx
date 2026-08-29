@@ -12,7 +12,7 @@ import {
 import { easeOut } from "../components/motion";
 import { FONTS } from "../fonts";
 import { FeatureIcon } from "../components/FeatureIcon";
-import { Receipt } from "../components/graphics";
+import { ReceiptPaper } from "../components/ReceiptPaper";
 
 // GRAPHIC-LED — sentence 5 (25.96–38.32s).
 // The receipt prints during the preamble (the price-transparency object),
@@ -24,16 +24,36 @@ export const S5Features: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      {/* The fare slip, printing line by line */}
+      {/* Surface plane the slip rests against — anchors the object */}
+      <div
+        style={{
+          position: "absolute",
+          left: (1080 - RECEIPT_W) / 2 - 110,
+          top: RECEIPT_TOP + 70,
+          width: RECEIPT_W + 220,
+          height: 580,
+          borderRadius: 36,
+          backgroundColor: COLORS.surface,
+          border: `1px solid ${COLORS.raised}`,
+          opacity: interpolate(frame, [4, 20], [0, 0.85], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: easeOut,
+          }),
+        }}
+      />
+
+      {/* The fare slip, printing line by line — slightly askew, an object */}
       <div
         style={{
           position: "absolute",
           left: (1080 - RECEIPT_W) / 2,
           top: RECEIPT_TOP,
-          rotate: "-2deg",
+          rotate: "-2.5deg",
+          transformOrigin: "top center",
         }}
       >
-        <Receipt startAt={12} printFrames={120} width={RECEIPT_W} />
+        <ReceiptPaper startAt={12} printFrames={120} width={RECEIPT_W} />
       </div>
 
       {/* Five feature rows */}
@@ -116,8 +136,8 @@ export const S5Features: React.FC = () => {
   );
 };
 
-const RECEIPT_W = 560;
-const RECEIPT_TOP = 280;
-const STACK_TOP = 900;
+const RECEIPT_W = 430;
+const RECEIPT_TOP = 230;
+const STACK_TOP = 960;
 const ROW_H = 72;
 const ROW_GAP = 18;
