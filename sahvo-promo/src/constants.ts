@@ -15,6 +15,8 @@ export const HEIGHT = 1920;
 export const FALLBACK_DURATION_IN_FRAMES = 1806;
 
 export const AUDIO_SRC = "audio/vo.mp3";
+/** Synthesized SFX track (tools/make_sfx.py) — regenerate after retiming. */
+export const SFX_SRC = "audio/sfx.wav";
 
 // ─── Palette — the six permitted values ─────────────────────────────────────
 export const COLORS = {
@@ -33,6 +35,7 @@ export const TYPE = {
   display: 96, // S6 promise line
   headline: 84, // scene headlines
   body: 44, // supporting lines
+  editorial: 34, // secondary editorial lines under headlines (78% ink)
   mono: 28, // kickers and labels (JetBrains Mono)
   monoSmall: 24, // absolute minimum for soft-blue mono
   brandMark: 40, // small corner mark in S1
@@ -205,19 +208,26 @@ export const MOTION = {
 
 // ─── Copy — every on-screen string ──────────────────────────────────────────
 // None of these duplicate a full narrated sentence.
+// The editorial second lines EXTEND the narration — they never restate the
+// voiced sentence, and they carry no launch language, no emergency-service
+// implication, and no statistics.
 export const COPY = {
   brandName: "Sahvo",
   s1Kicker: "A TRUST LAYER OVER INDIAN TRAVEL",
+  s1Editorial: "Everyone travels better with a local. Most people don't have one.",
   s2Kicker: "THE PROBLEM",
   s2Headline: "The fare gap.",
+  s2Editorial: "Quoted price. Meter price. Two different numbers.",
   s2BarQuoted: "QUOTED",
   s2BarMeter: "METER",
   s3Headline: "Starting here.",
+  s3Editorial: "One city. Done properly, before anywhere else.",
   s3PilotLabel: "PILOT · JAIPUR",
   s4Kicker: "STATUS",
   s4Headline: "In development.",
   s4Body: "Building openly. No launch yet.",
   s6Headline: "Clear answers.",
+  s6Editorial: "Before you commit, not after you've argued.",
   s7Url: "sahvoapp.com",
   s7Mono: "FOLLOW THE BUILD",
   s8Mono: "JAIPUR PILOT · HINDI + ENGLISH · 2026",

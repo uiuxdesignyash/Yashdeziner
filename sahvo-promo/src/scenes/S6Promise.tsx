@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { BEATS, COPY, PHOTOS, SCENES, TYPE, rel } from "../constants";
 import { PhotoLayer } from "../components/PhotoLayer";
-import { CharStaggerHeadline } from "../components/text";
+import { CharStaggerHeadline, Editorial } from "../components/text";
 
 // PHOTO-LED — sentence 6 (39.32–47.29s). The hold.
 // The market plays under "busy markets or historic monuments", crossfading
@@ -42,6 +42,13 @@ export const S6Promise: React.FC = () => {
           size={TYPE.display}
           align="center"
           style={{ textShadow: "0 8px 60px rgba(11, 19, 32, 0.9)" }}
+        />
+        {/* Enters only after the stagger has fully completed (~frame 177) */}
+        <Editorial
+          text={COPY.s6Editorial}
+          enterAt={textAt + 40}
+          align="center"
+          style={{ textShadow: "0 4px 40px rgba(11, 19, 32, 0.9)" }}
         />
       </div>
     </AbsoluteFill>

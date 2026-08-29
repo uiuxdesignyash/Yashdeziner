@@ -153,6 +153,46 @@ export const CharStaggerHeadline: React.FC<{
   );
 };
 
+/**
+ * Editorial second line: says what the voice is NOT saying. One line of
+ * 6–12 words, Figtree Regular ~34px, ink at 78%, 40px below its headline.
+ */
+export const Editorial: React.FC<{
+  text: string;
+  enterAt: number;
+  align?: "left" | "center";
+  style?: React.CSSProperties;
+}> = ({ text, enterAt, align = "left", style }) => {
+  const frame = useCurrentFrame();
+  return (
+    <div
+      style={{
+        ...FONTS.body,
+        fontSize: TYPE.editorial,
+        lineHeight: 1.5,
+        color: COLORS.ink,
+        textAlign: align,
+        opacity:
+          0.78 *
+          interpolate(frame, [enterAt, enterAt + 18], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: easeOut,
+          }),
+        translate: interpolate(frame, [enterAt, enterAt + 18], ["0px 24px", "0px 0px"], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+          easing: easeOut,
+        }),
+        marginTop: 40,
+        ...style,
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
 /** A brand-blue rule that draws to width, then keeps a breathing glow. */
 export const DrawRule: React.FC<{
   enterAt: number;

@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Sequence, staticFile } from "remotion";
 import { Audio } from "@remotion/media";
-import { AUDIO_SRC, COLORS, SCENES } from "./constants";
+import { AUDIO_SRC, COLORS, SCENES, SFX_SRC } from "./constants";
 import { Background, ChapterRail, TransitionSweeps } from "./components/global";
 import { S1Thesis } from "./scenes/S1Thesis";
 import { S2Problem } from "./scenes/S2Problem";
@@ -27,6 +27,7 @@ export const SahvoPromo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.canvas }}>
       <Audio src={staticFile(AUDIO_SRC)} />
+      <Audio src={staticFile(SFX_SRC)} />
       <Background />
       {(Object.keys(sceneComponents) as (keyof typeof sceneComponents)[]).map(
         (key) => {

@@ -4,7 +4,7 @@ import { BEATS, COLORS, COPY, LAYOUT, PHOTOS, SCENES, rel } from "../constants";
 import { breathe, easeOut } from "../components/motion";
 import { FareGapBars, Odometer } from "../components/graphics";
 import { PhotoLayer } from "../components/PhotoLayer";
-import { HeadlineLines, Kicker } from "../components/text";
+import { Editorial, HeadlineLines, Kicker } from "../components/text";
 
 // GRAPHIC-LED — sentence 2 (6.97–12.95s).
 // The rickshaw photograph sits far back; the odometer rolls (digits stay
@@ -37,6 +37,7 @@ export const S2Problem: React.FC = () => {
           enterAt={textAt}
           style={{ marginTop: 22 }}
         />
+        <Editorial text={COPY.s2Editorial} enterAt={textAt + 26} />
       </div>
 
       <div
@@ -70,4 +71,4 @@ export const S2Problem: React.FC = () => {
 };
 
 const HEAD_TOP = 300;
-const PANEL_TOP = 560;
+const PANEL_TOP = 600;

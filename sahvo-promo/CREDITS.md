@@ -23,3 +23,25 @@ that this is acceptable for the brand before publishing.
 
 The sixth planned photograph (hands holding a phone, screen not visible,
 for the S7 backdrop) was never delivered; S7 ships type-led without it.
+
+# Sound credits
+
+Freesound, Pixabay Audio and Zapsplat are unreachable from the build
+environment (network egress policy), so every effect is **synthesized
+procedurally** by `tools/make_sfx.py` (numpy/scipy) — no third-party
+recordings, no licence required. Regenerate with
+`python3 tools/make_sfx.py` after any retiming.
+
+| Effect | Where | Source | Licence |
+|---|---|---|---|
+| Rule-sweep whoosh (300 ms, band-filtered noise) | each scene cut + hook | synthesized in-project | n/a (original work) |
+| Odometer / bar detents (one per stop) | S2 | synthesized in-project | n/a |
+| Pin thud + airy ripple swell | S3 "Jaipur" | synthesized in-project | n/a |
+| Thermal printer feed bursts + paper tear | S5 receipt | synthesized in-project | n/a |
+| Icon draw-on ticks | S5 features | synthesized in-project | n/a |
+| Character-stagger ticks (very quiet) | S6 headline | synthesized in-project | n/a |
+
+Mix: all effects peak ≥18 dB below the voiceover (track peaks −22.5 dBFS),
+ducked a further 6 dB during voiced spans, high-passed at 200 Hz, nothing
+longer than 400 ms except the pin-ripple swell, first/last 0.3 s clean,
+no music bed.

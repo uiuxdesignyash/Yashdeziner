@@ -9,7 +9,7 @@ import {
 import { BEATS, COLORS, COPY, LAYOUT, PHOTOS, SCENES, rel } from "../constants";
 import { pulse } from "../components/motion";
 import { PhotoLayer } from "../components/PhotoLayer";
-import { HeadlineLines, Kicker } from "../components/text";
+import { Editorial, HeadlineLines, Kicker } from "../components/text";
 
 // PHOTO-LED — sentence 3 (13.97–19.96s).
 // The monument carries the frame. The pin drops with a spring and ONE
@@ -66,6 +66,11 @@ export const S3Jaipur: React.FC = () => {
           enterAt={headlineAt}
           style={{ marginTop: 22, textShadow: "0 6px 50px rgba(11, 19, 32, 0.9)" }}
         />
+        <Editorial
+          text={COPY.s3Editorial}
+          enterAt={headlineAt + 28}
+          style={{ textShadow: "0 4px 40px rgba(11, 19, 32, 0.9)" }}
+        />
 
         {/* Pin chip — lands on the syllable */}
         <div
@@ -114,4 +119,4 @@ export const S3Jaipur: React.FC = () => {
   );
 };
 
-const HEAD_TOP = 1040;
+const HEAD_TOP = 1000;
