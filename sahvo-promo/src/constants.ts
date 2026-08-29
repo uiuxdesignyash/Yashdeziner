@@ -45,9 +45,9 @@ export const TYPE = {
 // below the midline. TEXT must respect these; backgrounds, glows and
 // screenshot windows may bleed edge to edge.
 export const LAYOUT = {
-  marginX: 80,
-  textTop: 240, // no text above this line
-  textBottom: 1480, // no text below this line
+  marginX: 96,
+  textTop: 260, // no text above this line
+  textBottom: 1460, // no text below this line
   textRightBelowMid: WIDTH - 180, // below y=960, text must end left of x=900
   midline: HEIGHT / 2,
   blockGap: 40, // minimum between text blocks
@@ -60,6 +60,42 @@ export const LAYOUT = {
   railTop: 260,
   railBottom: 1460,
   ruleThickness: 3, // headline/body separator rules
+} as const;
+
+// ─── Photography ────────────────────────────────────────────────────────────
+// Full-bleed treated stock photography (Pexels/Unsplash/Pixabay). While a
+// photo file is missing, src is null and the PhotoLayer renders the
+// code-built Jaipur backdrop instead — drop the file into public/photos/,
+// set src, and the treatment pipeline applies unchanged.
+// Treatment (PhotoLayer): saturate(0.25) → #0B1320 multiply 60% →
+// #0B53FF colour-dodge corner 12% → grain → Ken Burns 1.00→1.06.
+export const PHOTOS: Record<
+  string,
+  { src: string | null; credit: string | null }
+> = {
+  hawaMahal: { src: null, credit: null }, // S1 — Jaipur facade, blue hour
+  rickshaw: { src: null, credit: null }, // S2 — autorickshaw / meter
+  monumentDawn: { src: null, credit: null }, // S3 — monument at dawn
+  market: { src: null, credit: null }, // S6a — busy market
+  walking: { src: null, credit: null }, // S6b — walking, in control
+  handsPhone: { src: null, credit: null }, // S7 — hands + phone, screen unseen
+};
+
+export const PHOTO_TREATMENT = {
+  saturation: 0.25,
+  navyMultiplyOpacity: 0.6,
+  dodgeOpacity: 0.12,
+  kenBurnsFrom: 1.0,
+  kenBurnsTo: 1.06,
+  grainOpacity: 0.06,
+} as const;
+
+// ─── The hook (S1) ──────────────────────────────────────────────────────────
+export const HOOK = {
+  headlineLands: 20, // "Feel secure." fully seated by 0.8s (frame 24)
+  sweepStart: 2, // something moves within the first 10 frames
+  sweepEnd: 12,
+  headline: "Feel secure.",
 } as const;
 
 // ─── Screenshots ────────────────────────────────────────────────────────────
