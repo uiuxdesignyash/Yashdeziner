@@ -1,95 +1,84 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Img,
   interpolate,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BEATS, COLORS, COPY, SCENES, TYPE, rel } from "../constants";
+import { BEATS, BRAND, COPY, LAYOUT, SCENES, TYPE, rel } from "../constants";
 import { easeOut } from "../components/motion";
-import { FONTS } from "../fonts";
 import { Kicker } from "../components/text";
 
 // THE CLOSE — sentence 8 (56.35–60.16s).
-// The wordmark blooms on "Welcome" (frame 1761): glow swells past its
-// resting point and settles. Everything is frozen by frame 1790 — nothing
-// resolves after the audio ends.
+// Placement 3: Primary_logo2 at 620px wide, centred, at the vertical
+// centre of the text safe area. It scales in from 0.94 on a spring while
+// a #0B53FF glow blooms to 30% and settles to 12%. Everything is frozen
+// from frame 1770 — the final 1.2 seconds hold the logo unmoving, and the
+// last frame of the video is the logo.
 export const S8Wordmark: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const wordmarkAt = rel(BEATS.s8Wordmark, SCENES.s8); // 85
-  const stillAt = rel(BEATS.s8AllStill, SCENES.s8); // 114
+  const logoAt = rel(BEATS.s8LogoIn, SCENES.s8); // 65
+  const stillAt = rel(BEATS.s8AllStill, SCENES.s8); // 94
+
+  const logoW = BRAND.closeWidth;
+  const logoH = logoW * BRAND.logoAspect; // ≈205
+  const safeCentre = (LAYOUT.textTop + LAYOUT.textBottom) / 2; // 860
+  // Clear space: nothing within one pin-glyph height (600px in the source
+  // lockup) of the logo at its rendered scale.
+  const clearSpace = 600 * (logoW / 1988); // ≈187
 
   const mark = spring({
-    frame: frame - wordmarkAt,
+    frame: frame - logoAt,
     fps,
     config: { damping: 200 },
-    durationInFrames: stillAt - wordmarkAt - 4,
+    durationInFrames: stillAt - logoAt - 2,
   });
 
-  const bloom = interpolate(
+  const glow = interpolate(
     Math.min(frame, stillAt),
-    [wordmarkAt, wordmarkAt + 14, stillAt],
-    [0, 1, 0.45],
+    [logoAt, logoAt + 16, stillAt],
+    [0, 0.3, 0.12],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeOut },
   );
 
   return (
     <AbsoluteFill>
-      <div
+      {/* The glow blooming behind the lockup */}
+      <AbsoluteFill
+        style={{
+          background: `radial-gradient(46% 18% at 50% ${(safeCentre / 1920) * 100}%, rgba(11, 83, 255, ${glow}) 0%, transparent 70%)`,
+        }}
+      />
+
+      <Img
+        src={staticFile(BRAND.logo)}
+        style={{
+          position: "absolute",
+          left: (1080 - logoW) / 2,
+          top: safeCentre - logoH / 2,
+          width: logoW,
+          height: logoH,
+          opacity: mark,
+          scale: String(0.94 + mark * 0.06),
+        }}
+      />
+
+      <Kicker
+        text={COPY.s8Mono}
+        enterAt={0}
+        size={TYPE.monoSmall}
         style={{
           position: "absolute",
           left: 0,
           right: 0,
-          top: WORDMARK_TOP,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          textAlign: "center",
+          top: safeCentre + logoH / 2 + clearSpace,
         }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            gap: 16,
-            opacity: mark,
-            scale: String(0.9 + mark * 0.1),
-          }}
-        >
-          <span
-            style={{
-              ...FONTS.display,
-              fontSize: TYPE.wordmark,
-              color: COLORS.ink,
-              letterSpacing: "-0.01em",
-              textShadow: `0 0 ${30 + bloom * 60}px rgba(11, 83, 255, ${bloom * 0.8})`,
-            }}
-          >
-            {COPY.brandName}
-          </span>
-          <span
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: "50%",
-              backgroundColor: COLORS.brand,
-              boxShadow: `0 0 ${20 + bloom * 50}px ${8 + bloom * 10}px rgba(11, 83, 255, ${
-                0.35 + bloom * 0.45
-              })`,
-            }}
-          />
-        </div>
-
-        <Kicker
-          text={COPY.s8Mono}
-          enterAt={0}
-          size={TYPE.monoSmall}
-          style={{ marginTop: 80 }}
-        />
-      </div>
+      />
     </AbsoluteFill>
   );
 };
-
-const WORDMARK_TOP = 800;

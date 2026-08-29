@@ -10,7 +10,7 @@ import { COLORS, COPY, HOOK, LAYOUT, PHOTOS, SCENES, TYPE } from "../constants";
 import { easeOut, pulse } from "../components/motion";
 import { FONTS } from "../fonts";
 import { PhotoLayer } from "../components/PhotoLayer";
-import { BrandMark, Editorial, Kicker } from "../components/text";
+import { Editorial, Kicker } from "../components/text";
 
 // THE HOOK — sentence 1 (0–5.86s).
 // Frame 1 is fully composed (it is the reel cover): treated Jaipur imagery
@@ -58,15 +58,6 @@ export const S1Thesis: React.FC = () => {
           }}
         />
       )}
-
-      <BrandMark
-        enterAt={-30}
-        style={{
-          position: "absolute",
-          top: LAYOUT.textTop,
-          left: LAYOUT.marginX,
-        }}
-      />
 
       <div
         style={{

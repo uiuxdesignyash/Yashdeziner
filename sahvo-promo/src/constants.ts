@@ -15,6 +15,24 @@ export const HEIGHT = 1920;
 export const FALLBACK_DURATION_IN_FRAMES = 1806;
 
 export const AUDIO_SRC = "audio/vo.mp3";
+
+// ─── Brand assets ───────────────────────────────────────────────────────────
+// Primary_logo2.png: the all-white lockup on transparency, 1988×656 — the
+// only version used in this video. pin.png is the pin glyph CROPPED from it
+// (x 1104–1606), never redrawn. Rules: no recolour, no stretch, no rotation,
+// moves as one object, never below 140px lockup width.
+export const BRAND = {
+  logo: "brand/Primary_logo2.png",
+  logoAspect: 656 / 1988, // height / width
+  pin: "brand/pin.png",
+  pinAspect: 502 / 600, // width / height
+  cornerWidth: 180,
+  cornerX: 96,
+  cornerY: 272, // clear of Instagram's ~220px top overlay
+  cornerOpacity: 0.55,
+  closeWidth: 620,
+  pinDropHeight: 220,
+} as const;
 /** Synthesized SFX track (tools/make_sfx.py) — regenerate after retiming. */
 export const SFX_SRC = "audio/sfx.wav";
 
@@ -178,8 +196,8 @@ export const BEATS = {
   s7VoiceStart: 1449, // "Visit sahvoapp.com" — URL must be seated by here
   s7RuleDone: 1500,
   s8VoiceStart: 1691, // "This is only our first step."
-  s8Wordmark: 1761, // "Welcome" — wordmark lands on this syllable
-  s8AllStill: 1790, // every animation fully settled; audio ends ≈1805
+  s8LogoIn: 1741, // logo entrance begins in the pause before "Welcome"
+  s8AllStill: 1770, // fully settled — the final 1.2s hold the logo unmoving
 } as const;
 
 // ─── Sentence 5 — feature onsets (measured speech-segment starts) ───────────
@@ -212,7 +230,6 @@ export const MOTION = {
 // voiced sentence, and they carry no launch language, no emergency-service
 // implication, and no statistics.
 export const COPY = {
-  brandName: "Sahvo",
   s1Kicker: "A TRUST LAYER OVER INDIAN TRAVEL",
   s1Editorial: "Everyone travels better with a local. Most people don't have one.",
   s2Kicker: "THE PROBLEM",

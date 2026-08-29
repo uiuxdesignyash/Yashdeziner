@@ -3,6 +3,7 @@ import { AbsoluteFill, Sequence, staticFile } from "remotion";
 import { Audio } from "@remotion/media";
 import { AUDIO_SRC, COLORS, SCENES, SFX_SRC } from "./constants";
 import { Background, ChapterRail, TransitionSweeps } from "./components/global";
+import { CornerMark } from "./components/CornerMark";
 import { S1Thesis } from "./scenes/S1Thesis";
 import { S2Problem } from "./scenes/S2Problem";
 import { S3Jaipur } from "./scenes/S3Jaipur";
@@ -46,6 +47,11 @@ export const SahvoPromo: React.FC = () => {
           );
         },
       )}
+      {/* Corner mark persists through scenes 1–7, above scene layers but
+          visually beneath the content (nothing else occupies its region). */}
+      <Sequence durationInFrames={SCENES.s8.start} name="CornerMark">
+        <CornerMark />
+      </Sequence>
       <ChapterRail />
       <TransitionSweeps />
     </AbsoluteFill>

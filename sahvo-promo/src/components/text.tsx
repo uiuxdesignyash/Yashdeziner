@@ -221,39 +221,3 @@ export const DrawRule: React.FC<{
     />
   );
 };
-
-/** The typographic Sahvo mark: ExtraBold name + brand-blue dot (a fill, not text). */
-export const BrandMark: React.FC<{
-  size?: number;
-  enterAt?: number;
-  style?: React.CSSProperties;
-}> = ({ size = TYPE.brandMark, enterAt = 0, style }) => {
-  const frame = useCurrentFrame();
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "baseline",
-        gap: size * 0.12,
-        opacity: interpolate(frame, [enterAt, enterAt + MOTION.enterFrames], [0, 1], {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-          easing: easeOut,
-        }),
-        ...style,
-      }}
-    >
-      <span style={{ ...FONTS.display, fontSize: size, color: COLORS.ink }}>
-        Sahvo
-      </span>
-      <span
-        style={{
-          width: size * 0.22,
-          height: size * 0.22,
-          borderRadius: "50%",
-          backgroundColor: COLORS.brand,
-        }}
-      />
-    </div>
-  );
-};

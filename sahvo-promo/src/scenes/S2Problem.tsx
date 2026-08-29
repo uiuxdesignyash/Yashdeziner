@@ -70,5 +70,6 @@ export const S2Problem: React.FC = () => {
   );
 };
 
-const HEAD_TOP = 300;
-const PANEL_TOP = 600;
+// HEAD_TOP clears the persistent corner mark (bottom edge ≈331 + clear space).
+const HEAD_TOP = 430;
+const PANEL_TOP = 720;
