@@ -73,12 +73,14 @@ export const PHOTOS: Record<
   string,
   { src: string | null; credit: string | null }
 > = {
-  hawaMahal: { src: null, credit: null }, // S1 — Jaipur facade, blue hour
-  rickshaw: { src: null, credit: null }, // S2 — autorickshaw / meter
-  monumentDawn: { src: null, credit: null }, // S3 — monument at dawn
-  market: { src: null, credit: null }, // S6a — busy market
-  walking: { src: null, credit: null }, // S6b — walking, in control
-  handsPhone: { src: null, credit: null }, // S7 — hands + phone, screen unseen
+  // All five supplied by the client in-chat — source and licence to be
+  // confirmed before publication (see CREDITS.md).
+  hawaMahal: { src: "photos/01-hawa-mahal.webp", credit: "Supplied by client — source/licence TBC" },
+  rickshaw: { src: "photos/02-rickshaw.webp", credit: "Supplied by client — source/licence TBC" },
+  monumentDawn: { src: "photos/03-monument.webp", credit: "Supplied by client — source/licence TBC" },
+  market: { src: "photos/04-market.webp", credit: "Supplied by client — source/licence TBC" },
+  walking: { src: "photos/05-walking.webp", credit: "Supplied by client — source/licence TBC" },
+  handsPhone: { src: null, credit: null }, // never delivered — S7 stays type-led
 };
 
 export const PHOTO_TREATMENT = {
@@ -96,23 +98,6 @@ export const HOOK = {
   sweepStart: 2, // something moves within the first 10 frames
   sweepEnd: 12,
   headline: "Feel secure.",
-} as const;
-
-// ─── Screenshots ────────────────────────────────────────────────────────────
-// Real captures in public/screenshots/. lowRes files stay under 1.4× zoom.
-export const SCREENSHOTS = {
-  hero: { src: "screenshots/01-hero.png", maxZoom: 1.35 },
-  problem: { src: "screenshots/02-problem.png", maxZoom: 1.35 },
-  pilot: { src: "screenshots/03-vision.png", maxZoom: 1.35 },
-  sos: { src: "screenshots/04-mvp-sos.png", maxZoom: 1.6 },
-  guides: { src: "screenshots/05-mvp-guides.png", maxZoom: 1.6 },
-  // 06-mvp-alerts, 07-mvp-price and 08-languages were NOT delivered.
-  // These three beats hold the last real capture (the MVP-scope screen
-  // lists all five features) until the files arrive — then point each
-  // src at its real file and nothing else needs to change.
-  price: { src: "screenshots/05-mvp-guides.png", maxZoom: 1.6 },
-  alerts: { src: "screenshots/05-mvp-guides.png", maxZoom: 1.6 },
-  languages: { src: "screenshots/05-mvp-guides.png", maxZoom: 1.6 },
 } as const;
 
 // ─── Scene boundaries ───────────────────────────────────────────────────────
@@ -185,6 +170,7 @@ export const BEATS = {
   s5HeadlineLands: 790, // "we have packed the essentials…"
   s5HeadlineGone: 880, // dissolved before the list ignites
   s6VoiceStart: 1180,
+  s6Crossfade: 1295, // market → walking, just before "you deserve" (43.64s)
   s6TextLands: 1310, // "clear answers" is voiced 43.64–45.27s
   s7VoiceStart: 1449, // "Visit sahvoapp.com" — URL must be seated by here
   s7RuleDone: 1500,
@@ -195,11 +181,11 @@ export const BEATS = {
 
 // ─── Sentence 5 — feature onsets (measured speech-segment starts) ───────────
 export const S5_FEATURES = [
-  { label: "OFFLINE SOS", screenshot: "sos", icon: "sos", at: 909 },
-  { label: "VERIFIED GUIDES", screenshot: "guides", icon: "guides", at: 970 },
-  { label: "PRICE TRANSPARENCY", screenshot: "price", icon: "price", at: 1018 },
-  { label: "SAFETY ALERTS", screenshot: "alerts", icon: "alerts", at: 1069 },
-  { label: "MULTILINGUAL SUPPORT", screenshot: "languages", icon: "languages", at: 1109 },
+  { label: "OFFLINE SOS", icon: "sos", at: 909 },
+  { label: "VERIFIED GUIDES", icon: "guides", at: 970 },
+  { label: "PRICE TRANSPARENCY", icon: "price", at: 1018 },
+  { label: "SAFETY ALERTS", icon: "alerts", at: 1069 },
+  { label: "MULTILINGUAL SUPPORT", icon: "languages", at: 1109 },
 ] as const;
 
 // ─── Motion vocabulary ──────────────────────────────────────────────────────
@@ -222,17 +208,15 @@ export const MOTION = {
 export const COPY = {
   brandName: "Sahvo",
   s1Kicker: "A TRUST LAYER OVER INDIAN TRAVEL",
-  s1Headline: ["Feel secure.", "No local required."],
   s2Kicker: "THE PROBLEM",
-  s2Headline: ["Inflated fares.", "Uncertainty."],
+  s2Headline: "The fare gap.",
   s2BarQuoted: "QUOTED",
   s2BarMeter: "METER",
-  s3Headline: ["We're building", "the fix."],
+  s3Headline: "Starting here.",
   s3PilotLabel: "PILOT · JAIPUR",
   s4Kicker: "STATUS",
   s4Headline: "In development.",
   s4Body: "Building openly. No launch yet.",
-  s5Headline: ["The essentials.", "One platform."],
   s6Headline: "Clear answers.",
   s7Url: "sahvoapp.com",
   s7Mono: "FOLLOW THE BUILD",

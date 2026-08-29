@@ -3,26 +3,25 @@
 Vertical promo video for Sahvo, cut against the ElevenLabs voiceover.
 1080 × 1920 · 30fps · duration derived from `public/audio/vo.mp3` (60.19s → 1806 frames).
 
-## ⚠️ Three screenshots still missing
+## Photography
 
-Five real captures are wired in: `01-hero`, `02-problem`, `03-vision`,
-`04-mvp-sos`, `05-mvp-guides`. Three were never delivered:
-**06-mvp-alerts, 07-mvp-price, 08-languages** — those three S5 beats
-currently hold the last real capture. When the files arrive, drop them into
-`public/screenshots/` and update the three `src` paths in `SCREENSHOTS`
-(`src/constants.ts`) — nothing else needs to change.
-
-Low-resolution captures are capped at 1.35× zoom via
-`SCREENSHOTS[...].maxZoom`; the 1920×1080 MVP captures hold up to 1.6×.
+Five treated photographs (supplied by the client) drive the photo-led
+scenes — see `CREDITS.md`: **source and licence must be confirmed before
+publishing.** Each lives in a `PHOTOS` slot in `src/constants.ts` and is
+swappable without code changes; a missing slot (src: null) falls back to
+the code-built Jaipur backdrop. The treatment pipeline (PhotoLayer) is
+mandatory: desaturate 25% → navy multiply 60% → colour-dodge corner 12% →
+grain → Ken Burns 1.00→1.06.
 
 ## Reel-safe text zone
 
-Text is confined to y 240–1480 (and ends left of x=900 below the midline)
-so Instagram's UI never covers it — see `LAYOUT` in `src/constants.ts`.
-Backgrounds, glows and screenshot windows may bleed edge to edge.
+Text is confined to y 260–1460 with 96px side margins (and ends left of
+x=900 below the midline) so Instagram's UI never covers it — see `LAYOUT`
+in `src/constants.ts`. Full-bleed photography and glows may bleed edge to
+edge; text and graphic panels may not.
 
 Subtitles are NOT burned in: `sahvo-promo.srt` is timed to the measured VO.
-The reel cover is frame 1 (`out/cover-frame1.png` after rendering stills).
+The reel cover is frame 1 (`out/cover-frame1.png`).
 
 ## Editing the cut
 

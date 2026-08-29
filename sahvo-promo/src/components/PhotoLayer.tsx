@@ -85,9 +85,11 @@ export const PhotoLayer: React.FC<Props> = ({
           opacity: src === null ? 0.2 : PHOTO_TREATMENT.dodgeOpacity,
         }}
       />
-      {/* Fine grain */}
+      {/* Fine grain — inline data URI, nothing to fetch, so the
+          no-background-image render concern does not apply. */}
       <AbsoluteFill
         style={{
+          // eslint-disable-next-line @remotion/no-background-image
           backgroundImage: `url("${GRAIN}")`,
           backgroundRepeat: "repeat",
           mixBlendMode: "overlay",
