@@ -3,25 +3,26 @@
 Vertical promo video for Sahvo, cut against the ElevenLabs voiceover.
 1080 × 1920 · 30fps · duration derived from `public/audio/vo.mp3` (60.19s → 1806 frames).
 
-## ⚠️ Before rendering the final video
+## ⚠️ Three screenshots still missing
 
-`public/screenshots/` currently contains **labeled placeholder slates**, not the
-real website captures. Drop the eight real screenshots in under these exact
-names (overwriting the slates):
+Five real captures are wired in: `01-hero`, `02-problem`, `03-vision`,
+`04-mvp-sos`, `05-mvp-guides`. Three were never delivered:
+**06-mvp-alerts, 07-mvp-price, 08-languages** — those three S5 beats
+currently hold the last real capture. When the files arrive, drop them into
+`public/screenshots/` and update the three `src` paths in `SCREENSHOTS`
+(`src/constants.ts`) — nothing else needs to change.
 
-```
-public/screenshots/01-hero.png
-public/screenshots/02-problem.png
-public/screenshots/03-pilot.png
-public/screenshots/04-sos.png
-public/screenshots/05-guides.png
-public/screenshots/06-price.png
-public/screenshots/07-alerts.png
-public/screenshots/08-languages.png
-```
+Low-resolution captures are capped at 1.35× zoom via
+`SCREENSHOTS[...].maxZoom`; the 1920×1080 MVP captures hold up to 1.6×.
 
-01, 02, 03 and 08 are lower resolution and are capped at 1.35× zoom in
-`src/constants.ts` (`SCREENSHOTS[...].maxZoom`); 04–07 hold up to 1.6×.
+## Reel-safe text zone
+
+Text is confined to y 240–1480 (and ends left of x=900 below the midline)
+so Instagram's UI never covers it — see `LAYOUT` in `src/constants.ts`.
+Backgrounds, glows and screenshot windows may bleed edge to edge.
+
+Subtitles are NOT burned in: `sahvo-promo.srt` is timed to the measured VO.
+The reel cover is frame 1 (`out/cover-frame1.png` after rendering stills).
 
 ## Editing the cut
 

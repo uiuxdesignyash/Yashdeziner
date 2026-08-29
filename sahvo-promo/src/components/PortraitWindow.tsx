@@ -13,6 +13,8 @@ type Props = {
   zoom?: number;
   /** Window entrance start (scene-relative). Pass null for no entrance. */
   enterAt?: number | null;
+  /** Entrance treatment — rotated between scenes so no two feel alike. */
+  reveal?: "rise" | "clip-left" | "clip-right" | "clip-bottom";
   objectPosition?: string;
   width?: number;
   height?: number;
@@ -30,6 +32,7 @@ export const PortraitWindow: React.FC<Props> = ({
   driftTo,
   zoom,
   enterAt = 0,
+  reveal = "rise",
   objectPosition = "50% 30%",
   width = LAYOUT.windowW,
   height = LAYOUT.windowH,
@@ -40,26 +43,31 @@ export const PortraitWindow: React.FC<Props> = ({
   const shot = SCREENSHOTS[screenshot];
   const effectiveZoom = Math.min(zoom ?? shot.maxZoom, shot.maxZoom);
 
-  const entrance =
+  const enterP =
     enterAt === null
-      ? { opacity: 1, translate: "0px 0px" }
-      : {
-          opacity: interpolate(frame, [enterAt, enterAt + 20], [0, 1], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-            easing: easeOut,
-          }),
-          translate: interpolate(
-            frame,
-            [enterAt, enterAt + 20],
-            ["0px 60px", "0px 0px"],
-            {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-              easing: easeOut,
-            },
-          ),
-        };
+      ? 1
+      : interpolate(frame, [enterAt, enterAt + 22], [0, 1], {
+          extrapolateLeft: "clamp",
+          extrapolateRight: "clamp",
+          easing: easeOut,
+        });
+
+  const entrance: {
+    opacity: number;
+    translate: string;
+    clipPath?: string;
+  } = { opacity: 1, translate: "0px 0px" };
+
+  if (reveal === "rise") {
+    entrance.opacity = enterP;
+    entrance.translate = `0px ${(1 - enterP) * 60}px`;
+  } else if (reveal === "clip-left") {
+    entrance.clipPath = `inset(0 ${(1 - enterP) * 100}% 0 0 round ${LAYOUT.windowRadius}px)`;
+  } else if (reveal === "clip-right") {
+    entrance.clipPath = `inset(0 0 0 ${(1 - enterP) * 100}% round ${LAYOUT.windowRadius}px)`;
+  } else if (reveal === "clip-bottom") {
+    entrance.clipPath = `inset(${(1 - enterP) * 100}% 0 0 0 round ${LAYOUT.windowRadius}px)`;
+  }
 
   return (
     <div
@@ -73,6 +81,7 @@ export const PortraitWindow: React.FC<Props> = ({
         boxShadow: `0 40px 80px rgba(0, 0, 0, 0.45)`,
         opacity: entrance.opacity * opacity,
         translate: entrance.translate,
+        clipPath: entrance.clipPath,
         ...style,
       }}
     >

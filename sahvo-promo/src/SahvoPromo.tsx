@@ -2,6 +2,7 @@ import React from "react";
 import { AbsoluteFill, Sequence, staticFile } from "remotion";
 import { Audio } from "@remotion/media";
 import { AUDIO_SRC, COLORS, SCENES } from "./constants";
+import { Background, ChapterRail, TransitionSweeps } from "./components/global";
 import { S1Thesis } from "./scenes/S1Thesis";
 import { S2Problem } from "./scenes/S2Problem";
 import { S3Jaipur } from "./scenes/S3Jaipur";
@@ -26,6 +27,7 @@ export const SahvoPromo: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: COLORS.canvas }}>
       <Audio src={staticFile(AUDIO_SRC)} />
+      <Background />
       {(Object.keys(sceneComponents) as (keyof typeof sceneComponents)[]).map(
         (key) => {
           const Scene = sceneComponents[key];
@@ -43,6 +45,8 @@ export const SahvoPromo: React.FC = () => {
           );
         },
       )}
+      <ChapterRail />
+      <TransitionSweeps />
     </AbsoluteFill>
   );
 };

@@ -9,11 +9,13 @@ import {
 import { BEATS, COLORS, COPY, SCENES, TYPE, rel } from "../constants";
 import { easeOut } from "../components/motion";
 import { FONTS } from "../fonts";
+import { SceneShell } from "../components/SceneShell";
 import { Kicker } from "../components/text";
 
 // Voice: "This is only our first step. Welcome to Sahvo." (56.35–60.16s)
-// The wordmark lands exactly on "Welcome" (frame 1761) and everything is
-// frozen by frame 1790 — nothing resolves after the audio ends.
+// ENTRANCE: glow bloom — the wordmark blooms on "Welcome" (frame 1761),
+// the glow swells then settles. NO EXIT: everything is frozen by frame 1790
+// and nothing resolves after the audio ends.
 export const S8Wordmark: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -28,59 +30,72 @@ export const S8Wordmark: React.FC = () => {
     durationInFrames: stillAt - wordmarkAt - 4,
   });
 
+  // The bloom: glow swells past its resting point, then settles — and is
+  // constant (not animating) from stillAt onwards.
+  const bloom = interpolate(
+    Math.min(frame, stillAt),
+    [wordmarkAt, wordmarkAt + 14, stillAt],
+    [0, 1, 0.45],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeOut },
+  );
+
   return (
-    <AbsoluteFill
-      style={{
-        background: `radial-gradient(110% 80% at 50% 42%, ${COLORS.surface} 0%, ${COLORS.canvas} 72%)`,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <AbsoluteFill>
+      <SceneShell sceneKey="s8" numeralTop={280} numeralRight={44} freezeAt={stillAt}>
         <div
           style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: WORDMARK_TOP,
             display: "flex",
-            alignItems: "baseline",
-            gap: 16,
-            opacity: mark,
-            scale: String(0.9 + mark * 0.1),
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <span
+          <div
             style={{
-              ...FONTS.display,
-              fontSize: TYPE.wordmark,
-              color: COLORS.ink,
-              letterSpacing: "-0.01em",
+              display: "flex",
+              alignItems: "baseline",
+              gap: 16,
+              opacity: mark,
+              scale: String(0.9 + mark * 0.1),
             }}
           >
-            {COPY.brandName}
-          </span>
-          <span
-            style={{
-              width: 30,
-              height: 30,
-              borderRadius: "50%",
-              backgroundColor: COLORS.brand,
-              boxShadow: "0 0 30px rgba(11, 83, 255, 0.6)",
-            }}
+            <span
+              style={{
+                ...FONTS.display,
+                fontSize: TYPE.wordmark,
+                color: COLORS.ink,
+                letterSpacing: "-0.01em",
+                textShadow: `0 0 ${30 + bloom * 60}px rgba(11, 83, 255, ${bloom * 0.8})`,
+              }}
+            >
+              {COPY.brandName}
+            </span>
+            <span
+              style={{
+                width: 30,
+                height: 30,
+                borderRadius: "50%",
+                backgroundColor: COLORS.brand,
+                boxShadow: `0 0 ${20 + bloom * 50}px ${8 + bloom * 10}px rgba(11, 83, 255, ${
+                  0.35 + bloom * 0.45
+                })`,
+              }}
+            />
+          </div>
+
+          <Kicker
+            text={COPY.s8Mono}
+            enterAt={0}
+            size={TYPE.monoSmall}
+            style={{ marginTop: 80 }}
           />
         </div>
-
-        <Kicker
-          text={COPY.s8Mono}
-          enterAt={0}
-          size={TYPE.monoSmall}
-          style={{
-            marginTop: 72,
-            opacity: interpolate(frame, [0, 12], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-              easing: easeOut,
-            }),
-          }}
-        />
-      </div>
+      </SceneShell>
     </AbsoluteFill>
   );
 };
+
+const WORDMARK_TOP = 800;
