@@ -1,0 +1,42 @@
+1
+00:00:00,500 --> 00:00:03,800
+India has so much to explore.
+
+2
+00:00:04,300 --> 00:00:08,800
+But sometimes, exploring a new place
+comes with a lot of questions.
+
+3
+00:00:09,300 --> 00:00:10,900
+Is this the right fare?
+
+4
+00:00:11,200 --> 00:00:13,300
+Can I trust this guide?
+
+5
+00:00:13,700 --> 00:00:15,900
+And what happens if something goes wrong?
+
+6
+00:00:16,400 --> 00:00:19,600
+What if you didn't have to
+figure it all out yourself?
+
+7
+00:00:20,400 --> 00:00:22,600
+That's why we're building Sahvo.
+
+8
+00:00:23,000 --> 00:00:25,600
+Know the fare. Know the guide.
+
+9
+00:00:26,200 --> 00:00:30,600
+Starting in Jaipur, we're building a more
+confident way to explore India.
+
+10
+00:00:31,200 --> 00:00:34,400
+This is Sahvo. And we're just getting started.

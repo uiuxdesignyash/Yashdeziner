@@ -16,6 +16,8 @@ import {
 } from "./constants";
 import { getAudioDuration } from "./get-audio-duration";
 import { SahvoPromo } from "./SahvoPromo";
+import { Reel01 } from "./reel01/Reel01";
+import { R_DURATION, R_FPS, R_HEIGHT, R_WIDTH } from "./reel01/constants";
 import { S1Thesis } from "./scenes/S1Thesis";
 import { S2Problem } from "./scenes/S2Problem";
 import { S3Jaipur } from "./scenes/S3Jaipur";
@@ -57,6 +59,14 @@ export const RemotionRoot: React.FC = () => {
         width={WIDTH}
         height={HEIGHT}
         calculateMetadata={calculateMetadata}
+      />
+      <Composition
+        id="SahvoReel01"
+        component={Reel01}
+        durationInFrames={R_DURATION}
+        fps={R_FPS}
+        width={R_WIDTH}
+        height={R_HEIGHT}
       />
       <Folder name="Scenes">
         {sceneEntries.map(({ id, component, scene }) => (

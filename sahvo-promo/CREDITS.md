@@ -45,3 +45,11 @@ Mix: all effects peak ≥18 dB below the voiceover (track peaks −22.5 dBFS),
 ducked a further 6 dB during voiced spans, high-passed at 200 Hz, nothing
 longer than 400 ms except the pin-ripple swell, first/last 0.3 s clean,
 no music bed.
+
+# Reel 01 (35s light film) — audio
+
+The Reel 01 music bed and all its effects are likewise **synthesized
+procedurally** (`tools/make_reel01_audio.py`) — original work, no licence
+required. The voiceover for the Reel 01 script has NOT been generated yet;
+`src/reel01/constants.ts` documents the drop-in slot
+(`public/audio/reel01-vo.mp3`, set `VO_PRESENT = true`).
