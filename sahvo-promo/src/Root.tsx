@@ -17,6 +17,7 @@ import {
 import { getAudioDuration } from "./get-audio-duration";
 import { SahvoPromo } from "./SahvoPromo";
 import { Reel01 } from "./reel01/Reel01";
+import { MapCheck } from "./reel01/MapCheck";
 import { R_DURATION, R_FPS, R_HEIGHT, R_WIDTH } from "./reel01/constants";
 import { S1Thesis } from "./scenes/S1Thesis";
 import { S2Problem } from "./scenes/S2Problem";
@@ -64,6 +65,14 @@ export const RemotionRoot: React.FC = () => {
         id="SahvoReel01"
         component={Reel01}
         durationInFrames={R_DURATION}
+        fps={R_FPS}
+        width={R_WIDTH}
+        height={R_HEIGHT}
+      />
+      <Composition
+        id="MapCheck"
+        component={MapCheck}
+        durationInFrames={30}
         fps={R_FPS}
         width={R_WIDTH}
         height={R_HEIGHT}
