@@ -1,64 +1,56 @@
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { FONTS } from "../fonts";
 import { easeOut } from "../components/motion";
-import {
-  DrawnPath,
-  INDIA_PATH,
-  LineIcon,
-  MAP_POINTS,
-  MapDot,
-  Rickshaw,
-} from "./assets";
-import { R_BEATS, R_COLORS, R_LAYOUT, R_SCENES, R_TYPE } from "./constants";
-import { RCanvas, RText } from "./ui";
+import { DrawnPath, LineIcon, MapDot } from "./assets";
+import { GEO, IndiaMapReal } from "./IndiaMapReal";
+import { ART, R_BEATS, R_COLORS, R_COPY, R_LAYOUT, R_SCENES, R_TYPE } from "./constants";
+import { Plate, RCanvas, RMono, RText, TextPanel } from "./ui";
 
 const rel = (abs: number, scene: { start: number }) => abs - scene.start;
+
+// Real map placement shared by R1/R6: scaled 0.87, inside the margins.
+export const MAP_SCALE = 0.87;
+export const MAP_LEFT = (1080 - 900 * MAP_SCALE) / 2; // 148.5
+export const MAP_TOP = 280;
+export const jaipurScreen = {
+  x: MAP_LEFT + GEO.jaipur.x * MAP_SCALE,
+  y: MAP_TOP + GEO.jaipur.y * MAP_SCALE,
+};
 
 // ── SCENE 01 — INDIA IS WAITING (0–4s) ──────────────────────────────────────
 export const R1India: React.FC = () => {
   const frame = useCurrentFrame();
-  const mapIn = interpolate(frame, [2, 26], [0, 1], {
+  const mapIn = interpolate(frame, [2, 24], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: easeOut,
   });
-  return (
-    <RCanvas glowX={72} glowY={22}>
-      <svg
-        viewBox="0 0 560 620"
-        style={{
-          position: "absolute",
-          left: 150,
-          top: 290,
-          width: 780,
-          height: 863,
-          opacity: mapIn,
-        }}
-      >
-        <path d={INDIA_PATH} fill={R_COLORS.mist} stroke={R_COLORS.light} strokeWidth={2} />
-        {/* Route drawing toward Jaipur */}
-        <DrawnPath
-          d={`M300 470 Q250 380 230 300 Q214 240 ${MAP_POINTS.jaipur.x} ${MAP_POINTS.jaipur.y}`}
-          from={R_BEATS.r1PinPulse + 6}
-          to={R_BEATS.r1RouteDone}
-          dashed
-        />
-        <MapDot
-          x={MAP_POINTS.jaipur.x}
-          y={MAP_POINTS.jaipur.y}
-          at={R_BEATS.r1PinPulse - 6}
-          rippleAt={R_BEATS.r1PinPulse}
-          r={11}
-        />
-      </svg>
 
-      {/* Travel glyphs settling around the map */}
+  return (
+    <RCanvas scene="r1">
+      <div style={{ position: "absolute", left: MAP_LEFT, top: MAP_TOP, opacity: mapIn }}>
+        <IndiaMapReal
+          fill={R_COLORS.surface}
+          stroke="rgba(143, 176, 255, 0.45)"
+          style={{ scale: String(MAP_SCALE), transformOrigin: "top left" }}
+        >
+          <DrawnPath
+            d={`M${GEO.chennai.x} ${GEO.chennai.y} Q ${GEO.hyderabad.x - 30} ${GEO.hyderabad.y} ${GEO.ahmedabad.x + 60} ${(GEO.ahmedabad.y + GEO.jaipur.y) / 2} Q ${GEO.jaipur.x - 20} ${GEO.jaipur.y + 60} ${GEO.jaipur.x} ${GEO.jaipur.y}`}
+            from={R_BEATS.r1PinPulse + 4}
+            to={R_BEATS.r1RouteDone}
+            dashed
+          />
+          <MapDot x={GEO.jaipur.x} y={GEO.jaipur.y} at={R_BEATS.r1PinPulse - 6} rippleAt={R_BEATS.r1PinPulse} r={11} />
+        </IndiaMapReal>
+      </div>
+
+      {/* Travel glyphs settling around the map — inside the margins */}
       {(
         [
-          { kind: "plane", x: 812, y: 380, at: 60 },
-          { kind: "suitcase", x: 140, y: 520, at: 70 },
-          { kind: "camera", x: 830, y: 900, at: 80 },
+          { kind: "plane", x: 860, y: 380, at: 60 },
+          { kind: "suitcase", x: 130, y: 480, at: 70 },
+          { kind: "camera", x: 880, y: 1010, at: 80 },
         ] as const
       ).map((g) => (
         <div
@@ -67,26 +59,20 @@ export const R1India: React.FC = () => {
             position: "absolute",
             left: g.x,
             top: g.y,
-            opacity: interpolate(frame, [g.at, g.at + 14], [0, 0.8], {
+            opacity: interpolate(frame, [g.at, g.at + 14], [0, 0.85], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
               easing: easeOut,
             }),
-            translate: `0px ${interpolate(frame, [g.at, g.at + 14], [16, 0], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-              easing: easeOut,
-            })}px`,
           }}
         >
-          <LineIcon kind={g.kind} color={R_COLORS.blue} size={52} />
+          <LineIcon kind={g.kind} size={50} />
         </div>
       ))}
 
-      <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: 1210 }}>
-        <RText text="India is waiting" at={R_BEATS.r1Text} />
-        <RText text="to be explored." at={R_BEATS.r1Text + 6} />
-      </div>
+      <TextPanel at={R_BEATS.r1Text - 8} top={1170}>
+        <RText lines={R_COPY.r1} at={R_BEATS.r1Text} size={72} />
+      </TextPanel>
     </RCanvas>
   );
 };
@@ -95,70 +81,88 @@ export const R1India: React.FC = () => {
 export const R2Questions: React.FC = () => {
   const frame = useCurrentFrame();
   const s = R_SCENES.r2;
-  const rickX = interpolate(frame, [10, s.duration], [80, 560], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const chip = (at: number) =>
-    interpolate(frame, [at, at + 14], [0, 1], {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: easeOut,
-    });
   const rupeeAt = rel(R_BEATS.r2Rupee, s);
   const guideAt = rel(R_BEATS.r2Guide, s);
   const qAt = rel(R_BEATS.r2Questions, s);
 
+  const fade = (at: number, to = 1) =>
+    interpolate(frame, [at, at + 14], [0, to], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: easeOut,
+    });
+
   return (
-    <RCanvas glowX={25} glowY={30}>
-      {/* Simplified city band: arch-tier facade + rooftops in pale blue */}
-      <svg
-        viewBox="0 0 1080 560"
-        style={{ position: "absolute", left: 0, top: 520, width: 1080, height: 560, opacity: interpolate(frame, [0, 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}
+    <RCanvas scene="r2">
+      <TextPanel at={4} top={268}>
+        <RText lines={R_COPY.r2} at={rel(R_BEATS.r2Text, s)} size={64} />
+      </TextPanel>
+
+      {/* The asset-sheet Jaipur skyline, alpha-lifted onto the navy */}
+      <div
+        style={{
+          position: "absolute",
+          left: R_LAYOUT.marginX,
+          width: R_LAYOUT.contentRight - R_LAYOUT.marginX,
+          top: 560,
+          opacity: fade(10, 0.9),
+          translate: `${interpolate(frame, [0, s.duration], [0, -22])}px 0px`,
+        }}
       >
-        {[0, 1, 2].map((tier) => {
-          const cols = 7 - tier * 2;
-          const w = 74;
-          const x0 = (1080 - cols * (w + 12)) / 2;
-          const y = 300 - tier * 110;
-          return (
-            <g key={tier}>
-              <rect x={x0 - 30} y={y - 16} width={cols * (w + 12) + 48} height={140} rx={10} fill={tier % 2 ? R_COLORS.mist : R_COLORS.light} opacity={0.75} />
-              {Array.from({ length: cols }).map((_, c) => (
-                <path
-                  key={c}
-                  d={`M${x0 + c * (w + 12) + 6} ${y + 108} V${y + 34} Q${x0 + c * (w + 12) + 6} ${y + 10} ${x0 + c * (w + 12) + w / 2} ${y} Q${x0 + c * (w + 12) + w - 6} ${y + 10} ${x0 + c * (w + 12) + w - 6} ${y + 34} V${y + 108} Z`}
-                  fill={R_COLORS.paper}
-                  opacity={0.9}
-                />
-              ))}
-            </g>
-          );
-        })}
-        {/* Road */}
-        <path d="M-40 520 Q300 420 620 452 Q880 478 1120 420" stroke={R_COLORS.light} strokeWidth={58} fill="none" strokeLinecap="round" />
-        <path d="M-40 520 Q300 420 620 452 Q880 478 1120 420" stroke={R_COLORS.paper} strokeWidth={3} strokeDasharray="22 26" fill="none" />
-      </svg>
-
-      {/* Rickshaw travelling the road */}
-      <div style={{ position: "absolute", left: rickX, top: 900, opacity: chip(8) }}>
-        <Rickshaw size={170} />
+        <Img src={staticFile(ART.city)} style={{ width: "100%" }} />
       </div>
 
-      {/* Uncertainty accumulating: fare, guide, crossing routes, questions */}
-      <div style={{ position: "absolute", left: 130, top: 700, opacity: chip(rupeeAt), scale: String(0.8 + chip(rupeeAt) * 0.2) }}>
-        <Badge label="₹" />
+      {/* Rickshaw plate rolling gently */}
+      <div
+        style={{
+          position: "absolute",
+          left: interpolate(frame, [10, s.duration], [116, 200], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          }),
+          top: 880,
+          opacity: fade(12),
+        }}
+      >
+        <Plate art={ART.rickshaw} at={12} left={0} top={0} width={330} tilt={-2} />
       </div>
-      <div style={{ position: "absolute", left: 800, top: 640, opacity: chip(guideAt) }}>
-        <Badge label="?" avatar />
+
+      {/* ₹ badge and guide plate arriving — the uncertainty accumulating */}
+      <div
+        style={{
+          position: "absolute",
+          left: 540,
+          top: 900,
+          width: 104,
+          height: 104,
+          borderRadius: "50%",
+          backgroundColor: R_COLORS.brand,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 0 34px rgba(11, 83, 255, 0.5)",
+          ...FONTS.display,
+          fontSize: 48,
+          color: R_COLORS.ink,
+          opacity: fade(rupeeAt),
+          scale: String(0.7 + fade(rupeeAt) * 0.3),
+        }}
+      >
+        ₹
       </div>
-      <svg viewBox="0 0 1080 400" style={{ position: "absolute", left: 0, top: 1080, width: 1080, height: 400 }}>
-        <DrawnPath d="M60 120 Q300 40 560 110 Q800 170 1020 90" from={qAt - 18} to={qAt + 24} dashed strokeWidth={2.5} />
-        <DrawnPath d="M40 240 Q360 320 640 230 Q860 160 1040 250" from={qAt - 8} to={qAt + 34} dashed strokeWidth={2.5} stroke={R_COLORS.light} />
+      <Plate art={ART.guideCircle} at={guideAt} left={730} top={860} width={190} circle />
+
+      {/* Routes crossing + question marks */}
+      <svg
+        viewBox="0 0 888 300"
+        style={{ position: "absolute", left: R_LAYOUT.marginX, top: 1140, width: 888, height: 300 }}
+      >
+        <DrawnPath d="M20 90 Q240 20 470 84 Q690 140 868 60" from={qAt - 16} to={qAt + 22} dashed strokeWidth={2.5} />
+        <DrawnPath d="M10 200 Q300 260 540 190 Q740 130 878 210" from={qAt - 6} to={qAt + 32} dashed strokeWidth={2.5} stroke={R_COLORS.soft} />
       </svg>
       {[
-        { x: 250, y: 1140, at: qAt },
-        { x: 760, y: 1240, at: qAt + 10 },
+        { x: 300, y: 1180, at: qAt },
+        { x: 730, y: 1260, at: qAt + 8 },
       ].map((q, i) => (
         <div
           key={i}
@@ -167,44 +171,18 @@ export const R2Questions: React.FC = () => {
             left: q.x,
             top: q.y,
             ...FONTS.display,
-            fontSize: 64,
-            color: R_COLORS.blue,
-            opacity: chip(q.at) * 0.9,
-            translate: `0px ${(1 - chip(q.at)) * 20}px`,
+            fontSize: 60,
+            color: R_COLORS.soft,
+            opacity: fade(q.at, 0.9),
+            translate: `0px ${(1 - fade(q.at)) * 20}px`,
           }}
         >
           ?
         </div>
       ))}
-
-      <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: 300 }}>
-        <RText text="But sometimes, travelling" at={rel(R_BEATS.r2Text, s)} size={R_TYPE.big} />
-        <RText text="comes with questions." at={rel(R_BEATS.r2Text, s) + 6} size={R_TYPE.big} />
-      </div>
     </RCanvas>
   );
 };
-
-const Badge: React.FC<{ label: string; avatar?: boolean }> = ({ label, avatar }) => (
-  <div
-    style={{
-      width: 96,
-      height: 96,
-      borderRadius: "50%",
-      backgroundColor: avatar ? R_COLORS.paper : R_COLORS.blue,
-      border: `2.5px solid ${avatar ? R_COLORS.blue : "transparent"}`,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      boxShadow: "0 14px 34px rgba(11, 19, 32, 0.14)",
-      ...FONTS.display,
-      fontSize: 46,
-      color: avatar ? R_COLORS.blue : R_COLORS.paper,
-    }}
-  >
-    {label}
-  </div>
-);
 
 // ── SCENE 03 — THE THREE QUESTIONS (9–16s) ──────────────────────────────────
 export const R3Three: React.FC = () => {
@@ -215,12 +193,12 @@ export const R3Three: React.FC = () => {
   const q3 = rel(R_BEATS.q3Start, s); // 135
 
   const beat = (start: number, end: number) => {
-    const enter = interpolate(frame, [start, start + 16], [0, 1], {
+    const enter = interpolate(frame, [start, start + 14], [0, 1], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
       easing: easeOut,
     });
-    const exit = interpolate(frame, [end - 12, end], [1, 0], {
+    const exit = interpolate(frame, [end - 10, end], [1, 0], {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
       easing: easeOut,
@@ -230,77 +208,81 @@ export const R3Three: React.FC = () => {
 
   const b1 = beat(q1 + 2, q2);
   const b2 = beat(q2, q3);
-  const b3 = { ...beat(q3, s.duration + 20), };
+  const b3 = beat(q3, s.duration + 20);
 
-  const shieldPulse = interpolate(frame, [q3 + 24, q3 + 48], [0, 1], {
+  const sosPulse = interpolate(frame, [q3 + 30, q3 + 56], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
+  const Q = ({ lines, at }: { lines: readonly string[]; at: number }) => (
+    <TextPanel at={at + 4} top={1080}>
+      <RText lines={lines} at={at + 8} />
+    </TextPanel>
+  );
+
   return (
-    <RCanvas glowX={50} glowY={70}>
+    <RCanvas scene="r3">
       {/* Q1 — FARE */}
-      <AbsoluteFill style={{ opacity: b1.o, translate: `${(1 - b1.enter) * 60}px 0px` }}>
-        <div style={{ position: "absolute", left: 330, top: 480 }}>
-          <Rickshaw size={220} />
-        </div>
-        <div style={{ position: "absolute", left: 620, top: 430 }}>
-          <Badge label="₹" />
-        </div>
-        <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: QUESTION_Y }}>
-          <RText text="How much should" at={q1 + 8} />
-          <RText text="this ride cost?" at={q1 + 14} />
-          <Underline at={q1 + 20} />
-        </div>
+      <AbsoluteFill style={{ opacity: b1.o, translate: `0px ${(1 - b1.enter) * 40}px` }}>
+        <Plate art={ART.autoCircle} at={q1 + 4} left={200} top={420} width={330} circle />
+        <Plate art={ART.fareMini} at={q1 + 18} left={560} top={560} width={330} tilt={2} pad={0} />
+        <Q lines={R_COPY.q1} at={q1} />
       </AbsoluteFill>
 
       {/* Q2 — GUIDE */}
-      <AbsoluteFill style={{ opacity: b2.o, translate: `0px ${(1 - b2.enter) * 50}px` }}>
-        <div style={{ position: "absolute", left: 420, top: 420 }}>
-          <AvatarWithBadge at={q2 + 14} />
-        </div>
-        <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: QUESTION_Y }}>
-          <RText text="Can I trust" at={q2 + 8} />
-          <RText text="this guide?" at={q2 + 14} />
-          <Underline at={q2 + 20} />
-        </div>
-      </AbsoluteFill>
-
-      {/* Q3 — SAFETY (calm: blue shield, navy SOS chip, no alarm language) */}
-      <AbsoluteFill style={{ opacity: b3.o, translate: `0px ${(1 - b3.enter) * 50}px` }}>
-        <div style={{ position: "absolute", left: 440, top: 400 }}>
-          {shieldPulse > 0 && shieldPulse < 1 && (
-            <div
-              style={{
-                position: "absolute",
-                left: 10,
-                top: 10,
-                width: 180,
-                height: 180,
-                borderRadius: "50%",
-                border: `2.5px solid ${R_COLORS.blue}`,
-                scale: String(1 + shieldPulse * 0.8),
-                opacity: 0.5 * (1 - shieldPulse),
-              }}
-            />
-          )}
-          <LineIcon kind="shield" size={200} color={R_COLORS.blue} drawFrom={q3 + 6} drawTo={q3 + 26} />
-          <div style={{ position: "absolute", left: 62, top: 62 }}>
-            <LineIcon kind="check" size={76} color={R_COLORS.blue} drawFrom={q3 + 26} drawTo={q3 + 36} />
-          </div>
-        </div>
+      <AbsoluteFill style={{ opacity: b2.o, translate: `0px ${(1 - b2.enter) * 40}px` }}>
+        <Plate art={ART.guidePortrait} at={q2 + 4} left={370} top={420} width={340} circle />
         <div
           style={{
             position: "absolute",
-            left: 480,
-            top: 660,
+            left: 640,
+            top: 700,
+            ...FONTS.display,
+            fontSize: 78,
+            color: R_COLORS.soft,
+            opacity: interpolate(frame, [q2 + 26, q2 + 40], [0, 0.9], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            }),
+          }}
+        >
+          ?
+        </div>
+        <Q lines={R_COPY.q2} at={q2} />
+      </AbsoluteFill>
+
+      {/* Q3 — SAFETY: the sheet's shield (red removed at source), calm */}
+      <AbsoluteFill style={{ opacity: b3.o, translate: `0px ${(1 - b3.enter) * 40}px` }}>
+        {sosPulse > 0 && sosPulse < 1 && (
+          <div
+            style={{
+              position: "absolute",
+              left: 375,
+              top: 425,
+              width: 330,
+              height: 330,
+              borderRadius: "50%",
+              border: `2.5px solid ${R_COLORS.brand}`,
+              scale: String(1 + sosPulse * 0.5),
+              opacity: 0.5 * (1 - sosPulse),
+            }}
+          />
+        )}
+        <Plate art={ART.shield} at={q3 + 4} left={375} top={425} width={330} circle />
+        <div
+          style={{
+            position: "absolute",
+            left: 490,
+            top: 800,
             padding: "12px 26px",
             borderRadius: 18,
-            backgroundColor: R_COLORS.navy,
+            backgroundColor: R_COLORS.raised,
+            border: `1px solid ${R_COLORS.surface}`,
             ...FONTS.mono,
             fontSize: R_TYPE.monoSmall,
             letterSpacing: "0.16em",
-            color: R_COLORS.paper,
+            color: R_COLORS.ink,
             opacity: interpolate(frame, [q3 + 34, q3 + 46], [0, 1], {
               extrapolateLeft: "clamp",
               extrapolateRight: "clamp",
@@ -309,82 +291,9 @@ export const R3Three: React.FC = () => {
         >
           SOS
         </div>
-        <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: QUESTION_Y }}>
-          <RText text="What if something" at={q3 + 8} />
-          <RText text="goes wrong?" at={q3 + 14} />
-          <Underline at={q3 + 20} />
-        </div>
+        <Q lines={R_COPY.q3} at={q3} />
       </AbsoluteFill>
     </RCanvas>
-  );
-};
-
-const QUESTION_Y = 1060;
-
-const Underline: React.FC<{ at: number }> = ({ at }) => {
-  const frame = useCurrentFrame();
-  return (
-    <div
-      style={{
-        width: interpolate(frame, [at, at + 20], [0, 150], {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-          easing: easeOut,
-        }),
-        height: 5,
-        borderRadius: 2.5,
-        backgroundColor: R_COLORS.blue,
-        marginTop: 30,
-      }}
-    />
-  );
-};
-
-const AvatarWithBadge: React.FC<{ at: number }> = ({ at }) => {
-  const frame = useCurrentFrame();
-  const badge = interpolate(frame, [at, at + 12, at + 34, at + 44], [0, 1, 1, 0.35], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const wobble = Math.sin(frame / 7) * interpolate(frame, [at + 20, at + 50], [0, 2.5], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  return (
-    <div style={{ position: "relative", rotate: `${wobble}deg` }}>
-      <svg width={230} height={230} viewBox="0 0 48 48">
-        <circle cx={24} cy={24} r={23} fill={R_COLORS.mist} />
-        <circle cx={24} cy={19} r={7.5} fill={R_COLORS.blue} opacity={0.85} />
-        <path d="M10 40 Q13 29 24 29 Q35 29 38 40 Z" fill={R_COLORS.blue} opacity={0.85} />
-      </svg>
-      <div
-        style={{
-          position: "absolute",
-          right: -8,
-          bottom: 10,
-          width: 64,
-          height: 64,
-          borderRadius: "50%",
-          backgroundColor: R_COLORS.blue,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          opacity: badge,
-        }}
-      >
-        <LineIcon kind="check" size={40} color={R_COLORS.paper} />
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          right: -30,
-          top: -10,
-          ...FONTS.display,
-          fontSize: 58,
-          color: R_COLORS.blue,
-          opacity: interpolate(frame, [at + 38, at + 50], [0, 0.9], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
-        }}
-      >
-        ?
-      </div>
-    </div>
   );
 };
 
@@ -394,45 +303,37 @@ export const R4Idea: React.FC = () => {
   const s = R_SCENES.r4;
   const textAt = rel(R_BEATS.r4Text, s); // 60
 
-  const straighten = interpolate(frame, [12, 55], [0, 1], {
+  const heroIn = interpolate(frame, [6, 26], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: easeOut,
   });
-  const qMark = interpolate(frame, [26, 40, 58, 72], [0, 0.9, 0.9, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  // A winding path relaxing toward a straight line.
-  const bend = (1 - straighten) * 130;
-  const d = `M140 ${840} Q ${340} ${840 - bend} 540 840 Q ${740} ${840 + bend} 940 840`;
 
   return (
-    <RCanvas glowX={50} glowY={44}>
-      <svg viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}>
-        <path d={d} stroke={R_COLORS.blue} strokeWidth={4} fill="none" strokeLinecap="round" />
-        <circle cx={140} cy={840} r={11} fill={R_COLORS.blue} />
-      </svg>
+    <RCanvas scene="r4">
+      {/* The sheet's glowing question-route hero — already a dark plate */}
       <div
         style={{
           position: "absolute",
-          left: 0,
-          right: 0,
-          top: 480,
-          textAlign: "center",
-          ...FONTS.display,
-          fontSize: 180,
-          color: R_COLORS.blue,
-          opacity: qMark,
+          left: (1080 - 620) / 2,
+          top: 300,
+          width: 620,
+          borderRadius: 40,
+          overflow: "hidden",
+          border: `1px solid ${R_COLORS.raised}`,
+          boxShadow: "0 30px 70px rgba(0,0,0,0.45)",
+          opacity: heroIn,
+          translate: `0px ${(1 - heroIn) * 40 + Math.sin(frame / 90) * 5}px`,
+          lineHeight: 0,
         }}
       >
-        ?
+        <Img src={staticFile(ART.questionHero)} style={{ width: "100%" }} />
       </div>
-      <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: 1000 }}>
-        <RText text="What if you didn't have to" at={textAt} size={R_TYPE.big} />
-        <RText text="figure it all out yourself?" at={textAt + 8} size={R_TYPE.big} />
-      </div>
+
+      <TextPanel at={textAt - 8} top={1010}>
+        <RText lines={R_COPY.r4} at={textAt} size={64} />
+        <RMono text="CLEAN · CALM · FOCUSED" at={textAt + 26} style={{ marginTop: 26 }} />
+      </TextPanel>
     </RCanvas>
   );
 };

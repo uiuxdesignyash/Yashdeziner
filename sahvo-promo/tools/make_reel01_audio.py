@@ -203,8 +203,19 @@ sadd(632 * F, whoosh(0.5), 0.09)        # wash
 sadd(660 * F, confirm(), 0.07)          # logo reveal
 sadd(722 * F, tick(1600), 0.045)        # fare card
 sadd(752 * F, tick(1600), 0.045)        # guide card
-# Scene 6 — expansion
-sadd(786 * F, tick(1500), 0.05)
+# Scene 6 — the pin drop (soft low thud + airy swell), then expansion
+def thud(dur=0.26):
+    n = int(dur * SR)
+    t = np.arange(n) / SR
+    x = np.sin(2 * np.pi * 225 * t * (1 - 0.25 * t)) * np.exp(-t * 22)
+    return hp(x, 160)
+
+def swell(dur=0.9):
+    n = int(dur * SR)
+    return hp(bp(rng.standard_normal(n), 600, 1400) * env(n, 0.4, 0.46), 300)
+
+sadd(800 * F, thud(), 0.085)
+sadd(804 * F, swell(), 0.028)
 sadd(840 * F, whoosh(0.45), 0.075)
 for fr in (858, 866, 875, 881, 887, 893):
     sadd(fr * F, tick(1800, 0.025), 0.032)

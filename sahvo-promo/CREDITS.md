@@ -53,3 +53,16 @@ procedurally** (`tools/make_reel01_audio.py`) — original work, no licence
 required. The voiceover for the Reel 01 script has NOT been generated yet;
 `src/reel01/constants.ts` documents the drop-in slot
 (`public/audio/reel01-vo.mp3`, set `VO_PRESENT = true`).
+
+
+# Reel 01 — artwork and map data
+
+| Asset | Source | Licence |
+|---|---|---|
+| 19 illustration crops in `public/art/` (city skyline, rickshaw, guide, shield, fare/guide cards, phone, question-route hero, landmark silhouettes, clouds, hillside, road) | Cropped from the client-supplied Scene 2–6 asset sheets | Client's own artwork — confirm underlying licence if the sheets were AI-generated or stock-derived |
+| India state polygons (`src/reel01/india-states.topo.json`) | `datamaps` npm package (MIT), geometry derived from Natural Earth | Natural Earth: public domain; datamaps: MIT |
+
+Accuracy processing applied at crop time: all readable placeholder figures
+(₹120–₹150, ₹85, 8.2 km, 18 min, 4.8/128 reviews, 5+ Years) and the
+placeholder name (Arjun Sharma) are masked with neutral blocks; the red SOS
+roundel and every red alert element are excluded/painted out.

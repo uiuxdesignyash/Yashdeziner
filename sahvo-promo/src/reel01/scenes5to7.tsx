@@ -11,325 +11,281 @@ import {
 import { FONTS } from "../fonts";
 import { easeOut } from "../components/motion";
 import { BRAND } from "../constants";
-import { Avatar, DrawnPath, INDIA_PATH, LineIcon, MAP_POINTS, MapDot, RAJASTHAN_PATH } from "./assets";
-import { R_BEATS, R_COLORS, R_LAYOUT, R_SCENES, R_TYPE } from "./constants";
-import { MaskedAmount, RCanvas, RCard, RMono, RText } from "./ui";
+import { DrawnPath, MapDot } from "./assets";
+import { GEO, IndiaMapReal } from "./IndiaMapReal";
+import { MAP_LEFT, MAP_SCALE, MAP_TOP, jaipurScreen } from "./scenes1to4";
+import { ART, R_BEATS, R_COLORS, R_COPY, R_LAYOUT, R_SCENES, R_TYPE } from "./constants";
+import { Plate, RCanvas, RMono, RText, TextPanel } from "./ui";
 
 const rel = (abs: number, scene: { start: number }) => abs - scene.start;
 
 // ── SCENE 05 — MEET SAHVO (20–26s) ──────────────────────────────────────────
-// The white wordmark lives on Sahvo Blue (the only logo asset supplied is
-// white-on-transparent), so the reveal happens on a blue wash that settles
-// into a band, with the product cards below on off-white.
 export const R5Reveal: React.FC = () => {
   const frame = useCurrentFrame();
   const s = R_SCENES.r5;
   const washAt = rel(R_BEATS.r5Wash, s); // 30
   const logoAt = rel(R_BEATS.r5Logo, s); // 60
   const meetAt = rel(R_BEATS.r5MeetText, s); // 75
-  const fareAt = rel(R_BEATS.r5FareCard, s); // 120
-  const guideAt = rel(R_BEATS.r5GuideCard, s); // 150
+  const fareAt = rel(R_BEATS.r5FareCard, s); // 115
+  const guideAt = rel(R_BEATS.r5GuideCard, s); // 142
 
-  // Blue wash: expands from the route head to cover, then settles to a band.
-  const cover = interpolate(frame, [washAt, washAt + 26], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: easeOut,
-  });
-  const settle = interpolate(frame, [logoAt + 34, logoAt + 54], [0, 1], {
+  const wash = interpolate(frame, [washAt, washAt + 24], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: easeOut,
   });
 
-  const bandTop = interpolate(settle, [0, 1], [0, BAND_TOP]);
-  const bandBottom = interpolate(settle, [0, 1], [1920, BAND_TOP + BAND_H]);
-  const bandRadius = settle * 44;
-
-  const logoW = 560;
+  const logoW = 500;
   const logoH = logoW * BRAND.logoAspect;
   const logoP = interpolate(frame, [logoAt, logoAt + 20], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
     easing: easeOut,
   });
-  // The lockup rides with the wash as it settles into the band.
-  const logoY = interpolate(settle, [0, 1], [770, BAND_TOP + 120]);
 
   return (
-    <RCanvas glowX={50} glowY={80}>
-      {/* Route line sweeping in, carrying the transition */}
+    <RCanvas scene="r5">
+      {/* Route line carrying the transition into the wash */}
       <svg viewBox="0 0 1080 1920" style={{ position: "absolute", inset: 0 }}>
-        <DrawnPath
-          d="M-40 900 Q260 840 540 880 Q760 910 1120 850"
-          from={0}
-          to={washAt + 4}
-          strokeWidth={5}
-        />
+        <DrawnPath d="M96 560 Q340 480 540 520 Q760 560 984 470" from={0} to={washAt + 2} strokeWidth={5} />
       </svg>
 
-      {/* The wash */}
+      {/* The brand-blue wash panel — inside the margins */}
       <div
         style={{
           position: "absolute",
-          left: settle * R_LAYOUT.marginX * 0 /* full-bleed band */,
-          right: 0,
-          top: bandTop,
-          height: bandBottom - bandTop,
-          width: "100%",
-          borderRadius: bandRadius,
-          backgroundColor: R_COLORS.blue,
-          scale: String(cover),
-          transformOrigin: "540px 880px",
-          opacity: cover > 0 ? 1 : 0,
-        }}
-      />
-
-      {/* ACTUAL wordmark — white on the blue wash, one object */}
-      <Img
-        src={staticFile(BRAND.logo)}
-        style={{
-          position: "absolute",
-          left: (1080 - logoW) / 2,
-          top: logoY,
-          width: logoW,
-          height: logoH,
-          opacity: logoP,
-          scale: String(0.94 + logoP * 0.06),
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          top: interpolate(settle, [0, 1], [770 + logoH + 70, BAND_TOP + 120 + logoH + 54]),
-          textAlign: "center",
+          left: R_LAYOUT.marginX,
+          width: R_LAYOUT.contentRight - R_LAYOUT.marginX,
+          top: 268,
+          height: 560,
+          borderRadius: 44,
+          backgroundColor: R_COLORS.brand,
+          boxShadow: "0 30px 80px rgba(11, 83, 255, 0.35)",
+          opacity: wash,
+          scale: String(0.9 + wash * 0.1),
+          transformOrigin: "50% 60%",
         }}
       >
-        <RText
-          text="Meet Sahvo."
-          at={meetAt}
-          size={64}
-          color={R_COLORS.paper}
-          align="center"
+        <Img
+          src={staticFile(BRAND.logo)}
+          style={{
+            position: "absolute",
+            left: (888 - logoW) / 2,
+            top: 96,
+            width: logoW,
+            height: logoH,
+            opacity: logoP,
+            scale: String(0.94 + logoP * 0.06),
+          }}
         />
-        <div style={{ display: "flex", justifyContent: "center", gap: 26, marginTop: 22 }}>
-          <RText text="Know the fare." at={meetAt + 40} size={R_TYPE.body} weight="body" color="rgba(255,255,255,0.85)" />
-          <RText text="Know the guide." at={meetAt + 48} size={R_TYPE.body} weight="body" color="rgba(255,255,255,0.85)" />
+        <div style={{ position: "absolute", left: 0, right: 0, top: 96 + logoH + 54, textAlign: "center" }}>
+          <RText lines={[R_COPY.r5Meet]} at={meetAt} size={58} align="center" />
+          <div
+            style={{
+              ...FONTS.body,
+              fontSize: R_TYPE.body,
+              color: "rgba(244, 247, 252, 0.88)",
+              marginTop: 20,
+              opacity: interpolate(frame, [meetAt + 34, meetAt + 50], [0, 1], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+                easing: easeOut,
+              }),
+            }}
+          >
+            {R_COPY.r5Know}
+          </div>
+          <RMono
+            text={R_COPY.r5Status}
+            at={meetAt + 50}
+            color="rgba(244, 247, 252, 0.75)"
+            style={{ marginTop: 26, display: "inline-block" }}
+          />
         </div>
       </div>
 
-      {/* Product cards below the band, stylised motion-graphic UI */}
-      <div style={{ position: "absolute", left: R_LAYOUT.marginX, top: CARDS_TOP }}>
-        <RCard at={fareAt} width={540}>
-          <RMono text="ESTIMATED FARE" at={fareAt + 6} />
-          <div style={{ marginTop: 20 }}>
-            <MaskedAmount at={fareAt + 10} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 24 }}>
-            <LineIcon kind="shield" size={34} color={R_COLORS.blue} />
-            <span style={{ ...FONTS.body, fontSize: 26, color: R_COLORS.inkSoft }}>
-              Priced before, not after.
-            </span>
-          </div>
-        </RCard>
-      </div>
-      <div style={{ position: "absolute", right: R_LAYOUT.marginX, top: CARDS_TOP + 270 }}>
-        <RCard at={guideAt} width={540}>
-          <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
-            <Avatar size={92} />
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                <span style={{ ...FONTS.display, fontSize: 34, color: R_COLORS.navy }}>
-                  Verified Guide
-                </span>
-                <span
-                  style={{
-                    width: 30,
-                    height: 30,
-                    borderRadius: "50%",
-                    backgroundColor: R_COLORS.blue,
-                    display: "inline-flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <LineIcon kind="check" size={20} color={R_COLORS.paper} />
-                </span>
-              </div>
-              <RMono text="ID VERIFIED · BACKGROUND CHECKED" at={guideAt + 10} style={{ marginTop: 10 }} />
-            </div>
-          </div>
-        </RCard>
-      </div>
+      {/* Product cards from the asset sheets, figures masked at source */}
+      <Plate art={ART.fareCard} at={fareAt} left={R_LAYOUT.marginX} top={880} width={430} tilt={-1.5} />
+      <Plate art={ART.guideCard} at={guideAt} left={R_LAYOUT.contentRight - 480} top={1010} width={480} tilt={1.5} />
     </RCanvas>
   );
 };
-
-const BAND_TOP = 210;
-const BAND_H = 700;
-const CARDS_TOP = 990;
 
 // ── SCENE 06 — STARTING IN JAIPUR, BUILDING FOR INDIA (26–31s) ─────────────
 export const R6Expand: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const s = R_SCENES.r6;
-  const jaipurAt = rel(R_BEATS.r6Jaipur, s); // 6
-  const rajAt = rel(R_BEATS.r6Rajasthan, s); // 32
-  const expandAt = rel(R_BEATS.r6Expand, s); // 60
-  const dotsAt = rel(R_BEATS.r6AllIndia, s); // 95
-  const pullAt = rel(R_BEATS.r6PullBack, s); // 120
+  const pinAt = rel(R_BEATS.r6PinDrop, s); // 20
+  const rajAt = rel(R_BEATS.r6Rajasthan, s); // 35
+  const expandAt = rel(R_BEATS.r6Expand, s); // 65
+  const dotsAt = rel(R_BEATS.r6AllIndia, s); // 98
 
-  const pull = interpolate(frame, [expandAt, pullAt + 24], [1.55, 1.0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: easeOut,
-  });
-  const raj = interpolate(frame, [rajAt, rajAt + 18], [0, 1], {
+  const raj = interpolate(frame, [rajAt, rajAt + 18], [0, 0.45], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  const J = MAP_POINTS.jaipur;
-  const routes: { to: keyof typeof MAP_POINTS; from: number }[] = [
-    { to: "delhi", from: expandAt },
-    { to: "ahmedabad", from: expandAt + 8 },
-    { to: "mumbai", from: expandAt + 16 },
-    { to: "kolkata", from: dotsAt },
-    { to: "hyderabad", from: dotsAt + 6 },
-    { to: "bangalore", from: dotsAt + 12 },
-    { to: "chennai", from: dotsAt + 18 },
+  // The real pin glyph falls with a spring onto the true coordinate.
+  const drop = spring({
+    frame: frame - pinAt,
+    fps,
+    config: { damping: 14, mass: 0.85 },
+    durationInFrames: 26,
+  });
+  const rippleP = interpolate(frame, [pinAt + 4, pinAt + 34], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const pinH = 220;
+  const pinW = pinH * BRAND.pinAspect;
+
+  const J = GEO.jaipur;
+  const routes: { to: { x: number; y: number }; from: number }[] = [
+    { to: GEO.delhi, from: expandAt },
+    { to: GEO.ahmedabad, from: expandAt + 8 },
+    { to: GEO.mumbai, from: expandAt + 16 },
+    { to: GEO.kolkata, from: dotsAt },
+    { to: GEO.hyderabad, from: dotsAt + 6 },
+    { to: GEO.bengaluru, from: dotsAt + 12 },
+    { to: GEO.chennai, from: dotsAt + 18 },
   ];
 
   return (
-    <RCanvas glowX={60} glowY={30}>
-      <svg
-        viewBox="0 0 560 620"
+    <RCanvas scene="r6">
+      {/* Clouds + a landmark from the sheets as quiet texture */}
+      <Img
+        src={staticFile(ART.clouds)}
+        style={{ position: "absolute", left: 130, top: 300, width: 200, opacity: 0.5 }}
+      />
+      <Img
+        src={staticFile(ART.lmHawaMahal)}
+        style={{ position: "absolute", left: R_LAYOUT.marginX, top: 968, width: 190, opacity: 0.5 }}
+      />
+      <Img
+        src={staticFile(ART.lmAmberFort)}
+        style={{ position: "absolute", left: R_LAYOUT.contentRight - 200, top: 975, width: 185, opacity: 0.45 }}
+      />
+
+      <div
         style={{
           position: "absolute",
-          left: 150,
-          top: 300,
-          width: 780,
-          height: 863,
-          scale: String(pull),
-          transformOrigin: `${((J.x - 0) / 560) * 100}% ${((J.y - 0) / 620) * 100}%`,
+          left: MAP_LEFT,
+          top: MAP_TOP,
           opacity: interpolate(frame, [0, 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
         }}
       >
-        <path d={INDIA_PATH} fill={R_COLORS.mist} stroke={R_COLORS.light} strokeWidth={2} />
-        <path d={RAJASTHAN_PATH} fill={R_COLORS.light} opacity={raj * 0.9} />
-        {routes.map((r) => {
-          const P = MAP_POINTS[r.to];
-          const mx = (J.x + P.x) / 2 + (P.y > J.y ? 24 : -18);
-          const my = (J.y + P.y) / 2 - 18;
-          return (
-            <g key={r.to}>
-              <DrawnPath d={`M${J.x} ${J.y} Q${mx} ${my} ${P.x} ${P.y}`} from={r.from} to={r.from + 22} dashed strokeWidth={2.6} />
-              <MapDot x={P.x} y={P.y} at={r.from + 18} r={6.5} />
-            </g>
-          );
-        })}
-        {/* Jaipur: the brand pin (white) in a blue roundel */}
-        <circle cx={J.x} cy={J.y} r={interpolate(frame, [jaipurAt, jaipurAt + 12], [0, 20], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeOut })} fill={R_COLORS.blue} />
-      </svg>
-      {/* Brand pin overlaid at Jaipur (screen space, follows the settled map) */}
-      <PinAtJaipur at={jaipurAt} pull={pull} />
+        <IndiaMapReal
+          fill={R_COLORS.surface}
+          stroke="rgba(143, 176, 255, 0.45)"
+          rajasthanFill={R_COLORS.brand}
+          rajasthanOpacity={raj}
+          style={{ scale: String(MAP_SCALE), transformOrigin: "top left" }}
+        >
+          {routes.map((r, i) => {
+            const mx = (J.x + r.to.x) / 2 + (r.to.y > J.y ? 26 : -20);
+            const my = (J.y + r.to.y) / 2 - 20;
+            return (
+              <g key={i}>
+                <DrawnPath
+                  d={`M${J.x} ${J.y} Q${mx} ${my} ${r.to.x} ${r.to.y}`}
+                  from={r.from}
+                  to={r.from + 22}
+                  dashed
+                  strokeWidth={2.6}
+                />
+                <MapDot x={r.to.x} y={r.to.y} at={r.from + 18} r={7} />
+              </g>
+            );
+          })}
+          <MapDot x={J.x} y={J.y} at={pinAt - 4} r={10} />
+        </IndiaMapReal>
+      </div>
 
-      <div style={{ position: "absolute", left: R_LAYOUT.marginX, right: R_LAYOUT.marginX, top: 1210 }}>
-        <SwapText
-          a="Starting in Jaipur."
-          b="Building for India."
-          aAt={rel(R_BEATS.r6Text1, s)}
-          bAt={rel(R_BEATS.r6Text2, s)}
+      {/* One expanding ripple at the landing */}
+      {rippleP > 0 && rippleP < 1 && (
+        <div
+          style={{
+            position: "absolute",
+            left: jaipurScreen.x - 46,
+            top: jaipurScreen.y - 20,
+            width: 92,
+            height: 40,
+            borderRadius: "50%",
+            border: `3px solid ${R_COLORS.brand}`,
+            scale: String(1 + rippleP * 3.4),
+            opacity: 0.7 * (1 - rippleP),
+          }}
         />
+      )}
+      {/* The REAL pin glyph, tip on 26.9124°N 75.7873°E */}
+      <div
+        style={{
+          position: "absolute",
+          left: jaipurScreen.x - pinW / 2,
+          top: jaipurScreen.y - pinH,
+          width: pinW,
+          height: pinH,
+          opacity: Math.min(drop * 1.6, 1),
+          translate: `0px ${(drop - 1) * 320}px`,
+          filter: "drop-shadow(0 14px 28px rgba(0,0,0,0.55))",
+        }}
+      >
+        <Img src={staticFile(BRAND.pin)} style={{ width: "100%", height: "100%" }} />
       </div>
+
+      <TextPanel at={rel(R_BEATS.r6Text1, s) - 8} top={1180}>
+        <div style={{ position: "relative", height: 100 }}>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: interpolate(frame, [rel(R_BEATS.r6Text2, s) - 12, rel(R_BEATS.r6Text2, s) - 2], [1, 0], {
+                extrapolateLeft: "clamp",
+                extrapolateRight: "clamp",
+              }),
+            }}
+          >
+            <RText lines={[R_COPY.r6a]} at={rel(R_BEATS.r6Text1, s)} />
+          </div>
+          <RText lines={[R_COPY.r6b]} at={rel(R_BEATS.r6Text2, s)} style={{ position: "absolute", inset: 0 }} />
+        </div>
+      </TextPanel>
     </RCanvas>
-  );
-};
-
-const PinAtJaipur: React.FC<{ at: number; pull: number }> = ({ at, pull }) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const drop = spring({ frame: frame - at, fps, config: { damping: 14, mass: 0.8 }, durationInFrames: 24 });
-  const h = 96;
-  const w = h * BRAND.pinAspect;
-  // The map scales around Jaipur, so Jaipur's screen position is fixed.
-  const x = 150 + (MAP_POINTS.jaipur.x / 560) * 780;
-  const y = 300 + (MAP_POINTS.jaipur.y / 620) * 863;
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: x - w / 2,
-        top: y - h + 6,
-        width: w,
-        height: h,
-        opacity: Math.min(drop * 1.5, 1) * (pull > 0 ? 1 : 1),
-        translate: `0px ${(drop - 1) * 160}px`,
-        filter: "drop-shadow(0 10px 18px rgba(11,19,32,0.3))",
-      }}
-    >
-      <Img src={staticFile(BRAND.pin)} style={{ width: "100%", height: "100%" }} />
-    </div>
-  );
-};
-
-const SwapText: React.FC<{ a: string; b: string; aAt: number; bAt: number }> = ({ a, b, aAt, bAt }) => {
-  const frame = useCurrentFrame();
-  const aOut = interpolate(frame, [bAt - 12, bAt - 2], [1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  return (
-    <div style={{ position: "relative", height: 110 }}>
-      <div style={{ position: "absolute", inset: 0, opacity: aOut }}>
-        <RText text={a} at={aAt} />
-      </div>
-      <div style={{ position: "absolute", inset: 0 }}>
-        <RText text={b} at={bAt} />
-      </div>
-    </div>
   );
 };
 
 // ── SCENE 07 — END CARD (31–35s) ────────────────────────────────────────────
 export const R7End: React.FC = () => {
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
   const s = R_SCENES.r7;
-  const logoAt = rel(R_BEATS.r7Logo, s); // 30
-  const tagAt = rel(R_BEATS.r7Tagline, s); // 62
-  const urlAt = rel(R_BEATS.r7Url, s); // 90
-  const stillAt = rel(R_BEATS.r7AllStill, s); // 102
+  const logoAt = rel(R_BEATS.r7Logo, s); // 28
+  const tagAt = rel(R_BEATS.r7Tagline, s); // 58
+  const urlAt = rel(R_BEATS.r7Url, s); // 78
+  const stillAt = rel(R_BEATS.r7AllStill, s); // 100
 
   const logoW = 520;
-  const logoH = logoW * BRAND.logoAspect;
-  const clearSpace = 600 * (logoW / 1988); // one pin-glyph height at scale
+  const logoH = logoW * BRAND.logoAspect; // ≈172
+  const clearSpace = 600 * (logoW / 1988); // ≈157 — one pin-glyph height
 
   const mark = spring({
     frame: Math.min(frame, stillAt) - logoAt,
-    fps: 30,
+    fps,
     config: { damping: 200 },
     durationInFrames: 26,
   });
+  const glow = interpolate(Math.min(frame, stillAt), [logoAt, logoAt + 16, stillAt], [0, 0.3, 0.12], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: easeOut,
+  });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: R_COLORS.navy }}>
+    <RCanvas scene="r7">
       <AbsoluteFill
         style={{
-          backgroundColor: R_COLORS.canvas,
-          opacity: interpolate(frame, [0, 18], [1, 0], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-            easing: easeOut,
-          }),
-        }}
-      />
-      <AbsoluteFill
-        style={{
-          background: `radial-gradient(50% 22% at 50% 44%, rgba(29, 78, 216, ${
-            0.16 * Math.min(interpolate(frame, [logoAt, stillAt], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }), 1)
-          }) 0%, transparent 70%)`,
+          background: `radial-gradient(48% 20% at 50% 36%, rgba(11, 83, 255, ${glow}) 0%, transparent 70%)`,
         }}
       />
       <Img
@@ -345,33 +301,49 @@ export const R7End: React.FC = () => {
         }}
       />
       <RText
-        text="Know. Go. Trust."
+        lines={[R_COPY.r7Tag]}
         at={tagAt}
-        size={52}
-        color="#F4F7FC"
+        size={50}
         align="center"
         style={{ position: "absolute", left: 0, right: 0, top: LOGO_TOP + logoH + clearSpace }}
       />
+      {/* sahvoapp.com at the vertical centre of the frame */}
       <div
         style={{
           position: "absolute",
           left: 0,
           right: 0,
-          top: LOGO_TOP + logoH + clearSpace + 130,
+          top: 924,
           textAlign: "center",
-          opacity: interpolate(frame, [urlAt, urlAt + 12], [0, 1], {
+          opacity: interpolate(frame, [urlAt, urlAt + 14], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+            easing: easeOut,
+          }),
+        }}
+      >
+        <div style={{ ...FONTS.display, fontSize: 64, color: R_COLORS.ink }}>{R_COPY.r7Url}</div>
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          top: 1090,
+          textAlign: "center",
+          opacity: interpolate(frame, [urlAt + 8, urlAt + 22], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
           }),
         }}
       >
-        <RMono text="FOLLOW THE JOURNEY" color="#8FB0FF" style={{ justifySelf: "center" }} />
-        <div style={{ ...FONTS.display, fontSize: 58, color: "#F4F7FC", marginTop: 26 }}>
-          sahvoapp.com
+        <RMono text={R_COPY.r7Follow} style={{ display: "inline-block" }} />
+        <div style={{ marginTop: 24 }}>
+          <RMono text={R_COPY.r7Status} at={urlAt + 14} style={{ display: "inline-block" }} />
         </div>
       </div>
-    </AbsoluteFill>
+    </RCanvas>
   );
 };
 
-const LOGO_TOP = 720;
+const LOGO_TOP = 480;

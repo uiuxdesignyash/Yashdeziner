@@ -11,6 +11,7 @@ import {
 } from "./constants";
 import { R1India, R2Questions, R3Three, R4Idea } from "./scenes1to4";
 import { R5Reveal, R6Expand, R7End } from "./scenes5to7";
+import { ReelRail } from "./ui";
 
 const scenes = [
   { key: "r1", C: R1India },
@@ -42,6 +43,7 @@ export const Reel01: React.FC = () => {
           </Sequence>
         );
       })}
+      <ReelRail />
     </AbsoluteFill>
   );
 };
